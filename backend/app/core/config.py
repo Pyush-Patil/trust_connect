@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parents[3]
 
+
 class Settings(BaseSettings):
     # DB Configuration
     db_host: str
@@ -14,9 +15,13 @@ class Settings(BaseSettings):
     # read variables from .env
     model_config = SettingsConfigDict(
         env_file=(BASE_DIR / ".env", ".env", "../.env"),
-        env_file_encoding='utf-8',
-        extra='ignore'
+        env_file_encoding="utf-8",
+        extra="ignore",
     )
+
+    @property
+    def DATABASE_URL(self) -> str:
+        return f"mysql+pymysql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
 
 
 setting = Settings()
