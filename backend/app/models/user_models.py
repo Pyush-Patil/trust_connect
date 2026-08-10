@@ -33,7 +33,7 @@ class User(Base):
         nullable=False,
     )
 
-    phone:Mapped[str]=mapped_column(
+    phone_no:Mapped[str]=mapped_column(
         String(15),
         unique=True,
         nullable=False,

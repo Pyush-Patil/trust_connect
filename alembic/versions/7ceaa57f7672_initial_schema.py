@@ -36,7 +36,7 @@ def upgrade() -> None:
     sa.Column('first_name', sa.String(length=100), nullable=False),
     sa.Column('last_name', sa.String(length=100), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
-    sa.Column('phone', sa.String(length=15), nullable=False),
+    sa.Column('phone_no', sa.String(length=15), nullable=False),
     sa.Column('password_hash', sa.String(length=255), nullable=False),
     sa.Column('role', sa.Enum('CUSTOMER', 'PROFESSIONAL', 'ADMIN', name='userrole'), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
@@ -47,7 +47,7 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
     op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
-    op.create_index(op.f('ix_users_phone'), 'users', ['phone'], unique=True)
+    op.create_index(op.f('ix_users_phone_no'), 'users', ['phone_no'], unique=True)
     op.create_table('customer_profiles',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -92,7 +92,7 @@ def downgrade() -> None:
     op.drop_table('professional_profiles')
     op.drop_index(op.f('ix_customer_profiles_id'), table_name='customer_profiles')
     op.drop_table('customer_profiles')
-    op.drop_index(op.f('ix_users_phone'), table_name='users')
+    op.drop_index(op.f('ix_users_phone_no'), table_name='users')
     op.drop_index(op.f('ix_users_id'), table_name='users')
     op.drop_index(op.f('ix_users_email'), table_name='users')
     op.drop_table('users')

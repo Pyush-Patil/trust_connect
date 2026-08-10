@@ -12,6 +12,12 @@ class Settings(BaseSettings):
     db_password: str
     db_name: str
 
+    
+    # JWT Configuration
+    jwt_secret_key: str
+    jwt_algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
+
     # read variables from .env
     model_config = SettingsConfigDict(
         env_file=(BASE_DIR / ".env", ".env", "../.env"),

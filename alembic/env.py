@@ -15,6 +15,11 @@ if str(BACKEND_DIR) not in sys.path:
 from app.database.base import Base
 from app.core.config import setting
 
+from app.models.user_models import User
+from app.models.category_model import Category
+from app.models.professional_models import ProfessionalProfile
+from app.models.customer_model import CustomerProfile
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config

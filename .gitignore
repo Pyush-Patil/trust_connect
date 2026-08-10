@@ -43,6 +43,14 @@ Thumbs.db
 *.sqlite3
 
 # =====================================
+# Alembic
+# =====================================
+/alembic/versions/*.pyc
+/alembic/versions/__pycache__/
+/alembic/script.py.mako
+/alembic.ini
+
+# =====================================
 # Pytest
 # =====================================
 .pytest_cache/

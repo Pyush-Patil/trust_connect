@@ -5,12 +5,9 @@ from app.core.config import setting
 from app.database.connection import engine 
 app=FastAPI()
 
-@app.get("/")
-def root():
-    return {
-        "host":setting.db_host,
-        "DB_name":setting.db_name
-    }
+from app.api.auth import router as auth_router
+
+app.include_router(auth_router)
 
 @app.get("/db-test")
 def db_test():

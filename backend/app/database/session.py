@@ -1,5 +1,7 @@
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 from app.database.connection import engine
+from _collections_abc import Generator
+
 
 Sessionlocal=sessionmaker(
     autoflush=False,
@@ -9,7 +11,7 @@ Sessionlocal=sessionmaker(
 
 
 #Dependency for FASTAPI
-def get_db():
+def get_db()->Generator[Session, None, None]:
     db=Sessionlocal()
     try:
         yield db
