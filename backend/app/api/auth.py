@@ -6,6 +6,8 @@ from app.schemas.user_schema import (CustomerRegisterRequest,ProfessionalRegiste
 )
 from app.services.auth_service import (register_customer,register_professional,login_user)
 from app.utils.jwt import create_access_token
+from app.dependencies.auth import get_current_user
+from app.models.user_models import User
 
 router=APIRouter(
     prefix="/auth",
@@ -39,3 +41,9 @@ def login_api(data:LoginRequest,db: Session=Depends(get_db),):
         "access_token":access_token,
         "token_type":"bearer",
     }
+
+@router.get("/me")
+def get_my_profile(
+    current_user:User=Depends(get_current_user),
+):
+    return current_user
