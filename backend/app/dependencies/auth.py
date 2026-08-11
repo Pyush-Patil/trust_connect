@@ -6,6 +6,7 @@ from app.database.session import get_db
 from app.models.user_models import User
 from app.repositores.user_repositories import get_user_by_id
 from app.utils.jwt import decode_access_token
+from app.core.enums import UserRole
 
 
 bearer_scheme = HTTPBearer()
@@ -49,3 +50,14 @@ def get_current_user(
         )
 
     return user
+
+def get_current_admin(
+        current_user:User=Depends(get_current_user)
+)->User:
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin acess required",
+        )
+    return current_user
+      

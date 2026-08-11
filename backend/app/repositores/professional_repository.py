@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session, selectinload
 from app.models.user_models import User
 from app.models.professional_models import ProfessionalProfile
 from app.core.enums import UserRole,VerificationStatus
+from app.models.professional_models import ProfessionalProfile
 
 def get_verified_professional(db:Session,)->list[ProfessionalProfile]:
 
@@ -19,4 +20,17 @@ def get_verified_professional(db:Session,)->list[ProfessionalProfile]:
         )
         )
     return list(db.scalars(statement).all())
+
+def get_professional_by_id(db:Session,professional_id:int)->ProfessionalProfile | None:
+    statement=select(ProfessionalProfile).where(
+        professional_id==ProfessionalProfile.id
+    )
+    return db.scalar(statement)
+
+def accept_professional(db:Session, professional:ProfessionalProfile)->ProfessionalProfile:
+    professional.verification_status=VerificationStatus.ACCEPTED
+    db.commit()
+    db.refresh(professional)
+
+    return professional
         
