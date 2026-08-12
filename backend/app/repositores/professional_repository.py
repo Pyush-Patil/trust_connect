@@ -27,8 +27,8 @@ def get_professional_by_id(db:Session,professional_id:int)->ProfessionalProfile 
     )
     return db.scalar(statement)
 
-def accept_professional(db:Session, professional:ProfessionalProfile)->ProfessionalProfile:
-    professional.verification_status=VerificationStatus.ACCEPTED
+def verify_professional(db:Session, professional:ProfessionalProfile)->ProfessionalProfile:
+    professional.verification_status=VerificationStatus.VERIFIED
     db.commit()
     db.refresh(professional)
 

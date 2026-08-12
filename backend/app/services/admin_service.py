@@ -1,9 +1,9 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.repositores.professional_repository import(get_professional_by_id,accept_professional)
+from app.repositores.professional_repository import(get_professional_by_id,verify_professional)
 
-def accept_professional_service(db:Session,professional_id:int):
+def verify_professional_service(db:Session,professional_id:int):
     professional=get_professional_by_id(db,professional_id)
 
     if not professional:
@@ -17,4 +17,4 @@ def accept_professional_service(db:Session,professional_id:int):
             detail="Professonal already verfied"
         )
 
-    return accept_professional(db,professional)
+    return verify_professional(db,professional)

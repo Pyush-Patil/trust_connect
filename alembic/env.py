@@ -19,7 +19,7 @@ from app.models.user_models import User
 from app.models.category_model import Category
 from app.models.professional_models import ProfessionalProfile
 from app.models.customer_model import CustomerProfile
-
+from app.models.booking_model import Booking
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
