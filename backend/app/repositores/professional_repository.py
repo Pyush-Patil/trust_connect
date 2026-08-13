@@ -33,4 +33,28 @@ def verify_professional(db:Session, professional:ProfessionalProfile)->Professio
     db.refresh(professional)
 
     return professional
-        
+
+def get_professional_by_user_id(
+    db: Session,
+    user_id: int,
+) -> ProfessionalProfile | None:
+
+    statement = select(ProfessionalProfile).where(
+        ProfessionalProfile.user_id == user_id
+    )
+
+    return db.scalar(statement)
+
+def get_pending_professionals(db:Session)->list[ProfessionalProfile]:
+
+    statement=(
+        select(ProfessionalProfile)
+        .join(User)
+        .where(User.role==UserRole.PROFESSIONAL,
+               User.is_active==True,
+               ProfessionalProfile.verification_status==VerificationStatus.PENDING 
+            )
+    )
+
+    return list(db.scalars(statement).all())
+                 

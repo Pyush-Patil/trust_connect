@@ -6,8 +6,8 @@ from app.models.user_models import User
 
 from app.core.enums import BookingStatus, VerificationStatus
 
-from app.repositores.booking_repositores import (create_booking)
-from app.repositores.professional_repository import get_professional_by_id
+from app.repositores.booking_repositores import (create_booking,get_customer_booking,get_professional_booking,get_booking_by_id,update_booking_status)
+from app.repositores.professional_repository import (get_professional_by_user_id)
 
 from app.schemas.booking_schema import (BookingCreateRequest,BookingResponse)
 
@@ -54,6 +54,109 @@ def create_customer_booking_service(db:Session, current_user:User,data:BookingCr
 
     return BookingResponse.model_validate(booking)
 
+def get_customer_booking_service(db:Session,current_user:User)->list[BookingResponse]:
 
+    bookings=get_customer_booking(db,current_user.id,)
+    return [
+        BookingResponse.model_validate(booking)
+        for booking in bookings
+        ]
 
-      
+def get_professional_booking_service(db:Session,current_user:User)->list[BookingResponse]:
+
+    professional=get_professional_by_user_id(db,current_user.id)
+
+    if not professional:
+        raise ValueError("Professional not found")
+
+    bookings=get_professional_booking(db,professional.id)
+
+    return [
+        BookingResponse.model_validate(booking)
+        for booking in bookings
+    ]
+
+def accept_booking_service(db:Session,current_user:User,booking_id:int)->BookingResponse:
+    #find booking
+    booking=get_booking_by_id(db,booking_id)
+
+    if not booking:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Booking not found")
+
+    #find the professional profile of logged in user
+    professional=get_professional_by_user_id(db,current_user.id)
+
+    if not professional:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="Professional profile not found")
+
+    #make sure booking belongs to this user
+    if booking.professional_id!=professional.id:
+         raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You are not authorized to accept this booking",
+        )
+
+    if booking.status!=BookingStatus.PENDING:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only pending bookings can be accepted",
+        )
+
+    #change status
+    booking=update_booking_status(db,booking,BookingStatus.ACCEPTED)
+
+    return BookingResponse.model_validate(booking)
+
+def reject_booking_service(
+    db: Session,
+    current_user: User,
+    booking_id: int,
+    reason: str,
+) -> BookingResponse:
+
+    # Find booking
+    booking = get_booking_by_id(
+        db,
+        booking_id,
+    )
+
+    if not booking:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Booking not found",
+        )
+
+    # Find professional profile
+    professional = get_professional_by_user_id(
+        db,
+        current_user.id,
+    )
+
+    if not professional:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Professional profile not found",
+        )
+
+    # Make sure booking belongs to this professional
+    if booking.professional_id != professional.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You are not authorized to reject this booking",
+        )
+
+    # Only pending bookings can be rejected
+    if booking.status != BookingStatus.PENDING:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only pending bookings can be rejected",
+        )
+
+    # Update booking
+    booking.status = BookingStatus.REJECTED
+    booking.rejection_reason = reason
+
+    db.commit()
+    db.refresh(booking)
+
+    return BookingResponse.model_validate(booking)

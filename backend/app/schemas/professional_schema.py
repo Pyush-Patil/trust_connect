@@ -1,8 +1,9 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict,EmailStr
 
 from app.core.enums import VerificationStatus
 
+# this is for customer to see the professional details 
 class ProfessionalResponse(BaseModel):
     id: int
     first_name: str
@@ -18,3 +19,20 @@ class ProfessionalResponse(BaseModel):
     created_at: datetime
 
     model_config=ConfigDict(from_attributes=True)
+
+# this is for admin to verify professional
+class PendingProfessionalResponse(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    email: EmailStr
+    phone_no: str
+    category: str
+    bio: str
+    experience: int
+    hourly_rate: int
+    city: str
+    state: str
+    verification_status: VerificationStatus
+
+    model_config = ConfigDict(from_attributes=True)

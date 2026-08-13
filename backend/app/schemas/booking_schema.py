@@ -36,3 +36,9 @@ class BookingResponse(BaseModel):
     model_config = {
         "from_attributes": True
     }
+
+class RejectBookingRequest(BaseModel):
+    reason: str = Field(
+        min_length=1,
+        max_length=500,
+    )
