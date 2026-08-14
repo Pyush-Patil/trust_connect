@@ -7,7 +7,7 @@ from app.models.user_models import User
 from app.core.enums import BookingStatus, VerificationStatus
 
 from app.repositores.booking_repositores import (create_booking,get_customer_booking,get_professional_booking,get_booking_by_id,update_booking_status)
-from app.repositores.professional_repository import (get_professional_by_user_id)
+from app.repositores.professional_repository import (get_professional_by_user_id,get_professional_by_id)
 
 from app.schemas.booking_schema import (BookingCreateRequest,BookingResponse)
 
@@ -158,5 +158,50 @@ def reject_booking_service(
 
     db.commit()
     db.refresh(booking)
+
+    return BookingResponse.model_validate(booking)
+
+def complete_booking_service(db:Session,current_user:User,booking_id:int,)->BookingResponse:
+
+    #find booking
+    booking=get_booking_by_id(db,booking_id)
+
+    if not booking:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Detail not found")
+
+    #find professional
+    professional=get_professional_by_id(db,current_user.id)
+
+    if not professional:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Professional not found")
+
+    #make sure booking belongs to this professional only
+    if booking.professional_id != professional.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="Professional not found")
+
+    #only accepted booking can be completed
+    if booking.status!=BookingStatus.ACCEPTED:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Only accepted bookings can be completed")
+
+    #change status
+    booking=update_booking_status(db,booking,BookingStatus.COMPLETED)
+
+    return BookingResponse.model_validate(booking)
+
+def cancel_booking_service(db:Session,current_user:User,booking_id:int)->BookingResponse:
+    booking=get_booking_by_id(db,booking_id)
+
+    if not booking:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Booking not found")
+
+    # make sure booking belongs to the logged-in customer
+    if booking.customer_id!=current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="You are not authorized to cancel this booking",)
+
+    # only pending booking can be cancelled
+    if booking.status!=BookingStatus.PENDING:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="only pending bookings can be cancelled")
+    #change status 
+    booking=update_booking_status(db,booking,BookingStatus.CANCELLED)
 
     return BookingResponse.model_validate(booking)

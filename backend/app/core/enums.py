@@ -18,7 +18,8 @@ class BookingStatus(str, Enum):
     PENDING = "pending"
     ACCEPTED = "accepted"
     COMPLETED = "completed"
-    CANCELLED = "cancelled"
+    REJECTED = "rejected"
+    CANCELLED="cancelled"
 
 
 class QuoteStatus(str, Enum):
