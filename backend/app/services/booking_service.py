@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 from app.models.booking_model import Booking
 from app.models.user_models import User
 
-from app.core.enums import BookingStatus, VerificationStatus
+from app.core.enums import BookingStatus, VerificationStatus,UserRole
 
-from app.repositores.booking_repositores import (create_booking,get_customer_booking,get_professional_booking,get_booking_by_id,update_booking_status)
+from app.repositores.booking_repositores import (create_booking,get_customer_booking,get_professional_booking,get_booking_by_id,update_booking_status,get_all_bookings)
 from app.repositores.professional_repository import (get_professional_by_user_id,get_professional_by_id)
 
 from app.schemas.booking_schema import (BookingCreateRequest,BookingResponse)
@@ -205,3 +205,58 @@ def cancel_booking_service(db:Session,current_user:User,booking_id:int)->Booking
     booking=update_booking_status(db,booking,BookingStatus.CANCELLED)
 
     return BookingResponse.model_validate(booking)
+
+def get_booking_details_service(
+        db:Session,
+        current_user:User,
+        booking_id:int
+)->BookingResponse:
+
+    booking=get_booking_by_id(db,booking_id)
+
+    if not booking:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Booking not found"
+        )
+    #Admin can view Booking
+    if current_user.role==UserRole.ADMIN:
+        return BookingResponse.model_validate(booking)
+
+    #customer can view only their bokings
+    if current_user.role==UserRole.CUSTOMER:
+        if booking.customer_id !=current_user.id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="You are not authorized to view this booking"
+            )
+        return BookingResponse.model_validate(booking)
+
+    # professional can view their assigned bookings
+    if current_user.role==UserRole.PROFESSIONAL:
+        professional=get_professional_by_id(db,current_user.id)
+
+        if not professional:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Professional profile not found"
+            )
+        if booking.professional_id !=professional.id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="You are not authorized to view this booking"
+            )
+        return BookingResponse.model_validate(booking)
+
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You are not authorized to view this booking"
+    )
+
+def get_all_bookings_service(db:Session)->list[BookingResponse]:
+    bookings=get_all_bookings(db)
+
+    return [
+        BookingResponse.model_validate(booking)
+        for booking in bookings
+    ]

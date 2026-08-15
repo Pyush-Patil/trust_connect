@@ -11,10 +11,13 @@ from app.services.booking_service import (
     get_professional_booking_service,
     accept_booking_service,
     reject_booking_service,
-    complete_booking_service
+    complete_booking_service,
+    get_booking_details_service
     )
 
-router=APIRouter()
+router=APIRouter(
+    tags=["Bookings"]
+)
 
 @router.post("/bookings",response_model=BookingResponse)
 def create_booking_api(
@@ -56,3 +59,8 @@ def complete_booking_api(booking_id:int,db:Session=Depends(get_db),curret_user:U
 @router.patch("/bookings/{booking_id}/cancel",response_model=BookingResponse)
 def cancel_booking_api(booking_id:int,db:Session=Depends(get_db),current_user:User=Depends(get_current_user)):
     return cancel_booking_api(db,current_user,booking_id)
+
+@router.get("/bookings/{booking_id}",response_model=BookingResponse)
+def get_bookings_api(booking_id:int,db:Session=Depends(get_db),current_user:User=Depends(get_current_user)):
+    return get_booking_details_service(db,current_user,booking_id)
+

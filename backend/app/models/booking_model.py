@@ -78,10 +78,13 @@ class Booking(Base):
     )
 
     status: Mapped[BookingStatus] = mapped_column(
-        Enum(BookingStatus),
-        nullable=False,
-        default=BookingStatus.PENDING,
-    )
+    Enum(
+        BookingStatus,
+        values_callable=lambda enum: [e.value for e in enum]
+    ),
+    nullable=False,
+    default=BookingStatus.PENDING,
+)
 
     rejection_reason: Mapped[str | None] = mapped_column(
     String(500),

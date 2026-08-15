@@ -7,9 +7,13 @@ from app.models.user_models import User
 from app.services.admin_service import (verify_professional_service,get_pending_professionals_service)
 from app.dependencies.auth import get_current_admin
 from app.schemas.professional_schema import PendingProfessionalResponse
+from app.schemas.booking_schema import BookingResponse
+from app.services.booking_service import get_all_bookings_service
 
 
-router = APIRouter()
+router = APIRouter(
+      tags=["Admin"]
+)
 
 @router.patch("/admin/professional/{professional_id}/verify")
 def verify_professional_api(
@@ -22,3 +26,10 @@ def verify_professional_api(
 @router.get("/admin/professional/pending",response_model=list[PendingProfessionalResponse])
 def get_pending_professional_api(db:Session=Depends(get_db),current_user=Depends(get_current_admin)):
       return get_pending_professionals_service(db)
+
+@router.get("/admin/bookings",response_model=list[BookingResponse])
+def get_all_bookings_api(
+      db:Session=Depends(get_db),
+      current_user:User=Depends(get_current_admin)
+):
+      return get_all_bookings_service(db)

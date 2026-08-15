@@ -39,3 +39,5 @@ def update_booking_status(db:Session,booking:Booking,status:BookingStatus,)->Boo
 
     return booking
 
+def get_all_bookings(db: Session):
+    return list(db.scalars(select(Booking)).all())
