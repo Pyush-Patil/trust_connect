@@ -1,5 +1,5 @@
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session 
+from fastapi import HTTPException, status
 
 from app.models.user_models import User
 from app.models.customer_model import CustomerProfile
@@ -8,6 +8,7 @@ from app.repositores.user_repositories import (
     get_user_by_email,
     get_user_by_phone
 )
+from app.repositores.professional_repository import get_category_by_id
 from app.schemas.user_schema import (
     CustomerRegisterRequest,
     ProfessionalRegisterRequest,
@@ -25,13 +26,13 @@ def register_customer(
     existing_email=get_user_by_email(db,data.email)
 
     if existing_email:
-        raise ValueError("Email is already registered")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email is already registered")
 
     #check duplicate phone 
     existing_phone=get_user_by_phone(db,data.phone_no)
 
     if existing_phone:
-        raise ValueError("Phone is already registered")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Phone is already registered")
 
     #hashed password
     hashed_password=hash_password(data.password)
@@ -83,11 +84,14 @@ def register_professional(
     #check existing email
     existing_email=get_user_by_email(db,data.email)
     if existing_email:
-        raise ValueError("Emial is already registered")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email is already registered")
 
     existing_phone=get_user_by_phone(db,data.phone_no)
     if existing_phone:
-        raise ValueError("Phone is already registered")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Phone is already registered")
+
+    if not get_category_by_id(db, data.category_id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found")
 
     hashed_password = hash_password(data.password)
 
@@ -139,16 +143,16 @@ def login_user(db:Session,data:LoginRequest,)->User:
     user=get_user_by_email(db, data.email)
 
     if not user:
-        raise ValueError("Email not found")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
 
     #verify password
     is_password_valid=verify_password(data.password,user.password_hash)
 
     if not is_password_valid:
-        raise ValueError("Invalid password")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
 
     if not user.is_active:
-        raise ValueError("User account is inactive")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="User account is inactive")
 
     return user
 

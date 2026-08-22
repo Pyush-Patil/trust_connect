@@ -31,7 +31,7 @@ def search_professional_api(
         db,category,city,state,min_rate,max_rate,
     )
 
-@router.get("/professionals/{professional_id}")
+@router.get("/professionals/{professional_id}", response_model=ProfessionalResponse)
 def get_professional_by_id_api(
     professional_id: int,
     db: Session = Depends(get_db),

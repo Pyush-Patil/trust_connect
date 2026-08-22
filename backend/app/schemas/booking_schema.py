@@ -30,6 +30,7 @@ class BookingResponse(BaseModel):
     state: str
     pincode: str
     status: BookingStatus
+    rejection_reason: str | None = None
     created_at: datetime
     updated_at: datetime
 

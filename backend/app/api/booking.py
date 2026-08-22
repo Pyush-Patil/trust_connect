@@ -12,7 +12,8 @@ from app.services.booking_service import (
     accept_booking_service,
     reject_booking_service,
     complete_booking_service,
-    get_booking_details_service
+    get_booking_details_service,
+    cancel_booking_service,
     )
 
 router=APIRouter(
@@ -58,7 +59,7 @@ def complete_booking_api(booking_id:int,db:Session=Depends(get_db),curret_user:U
 
 @router.patch("/bookings/{booking_id}/cancel",response_model=BookingResponse)
 def cancel_booking_api(booking_id:int,db:Session=Depends(get_db),current_user:User=Depends(get_current_user)):
-    return cancel_booking_api(db,current_user,booking_id)
+    return cancel_booking_service(db,current_user,booking_id)
 
 @router.get("/bookings/{booking_id}",response_model=BookingResponse)
 def get_bookings_api(booking_id:int,db:Session=Depends(get_db),current_user:User=Depends(get_current_user)):

@@ -46,6 +46,10 @@ def get_professional_by_user_id(
 
     return db.scalar(statement)
 
+
+def get_category_by_id(db: Session, category_id: int) -> Category | None:
+    return db.get(Category, category_id)
+
 def get_pending_professionals(db:Session)->list[ProfessionalProfile]:
 
     statement=(
@@ -89,5 +93,3 @@ def search_professionals(
                 statement=statement.where(ProfessionalProfile.hourly_rate<=max_rate)
 
       return list(db.scalars(statement).all())
-     
-    

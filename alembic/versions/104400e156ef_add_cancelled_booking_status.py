@@ -9,6 +9,7 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.dialects import mysql
 
 
 # revision identifiers, used by Alembic.
@@ -20,9 +21,21 @@ depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
     """Upgrade schema."""
-    pass
+    op.alter_column(
+        'bookings',
+        'status',
+        existing_type=mysql.ENUM('PENDING', 'ACCEPTED', 'COMPLETED', 'REJECTED'),
+        type_=sa.Enum('PENDING', 'ACCEPTED', 'COMPLETED', 'REJECTED', 'CANCELLED', name='bookingstatus'),
+        existing_nullable=False,
+    )
 
 
 def downgrade() -> None:
     """Downgrade schema."""
-    pass
+    op.alter_column(
+        'bookings',
+        'status',
+        existing_type=sa.Enum('PENDING', 'ACCEPTED', 'COMPLETED', 'REJECTED', 'CANCELLED', name='bookingstatus'),
+        type_=mysql.ENUM('PENDING', 'ACCEPTED', 'COMPLETED', 'REJECTED'),
+        existing_nullable=False,
+    )

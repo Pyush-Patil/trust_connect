@@ -13,6 +13,12 @@ from app.schemas.booking_schema import (BookingCreateRequest,BookingResponse)
 
 def create_customer_booking_service(db:Session, current_user:User,data:BookingCreateRequest)->BookingResponse:
 
+    if current_user.role != UserRole.CUSTOMER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only customers can create bookings",
+        )
+
     #find professional
     professional=get_professional_by_id(db,data.professional_id)
 
@@ -56,6 +62,12 @@ def create_customer_booking_service(db:Session, current_user:User,data:BookingCr
 
 def get_customer_booking_service(db:Session,current_user:User)->list[BookingResponse]:
 
+    if current_user.role != UserRole.CUSTOMER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only customers can view customer bookings",
+        )
+
     bookings=get_customer_booking(db,current_user.id,)
     return [
         BookingResponse.model_validate(booking)
@@ -63,6 +75,12 @@ def get_customer_booking_service(db:Session,current_user:User)->list[BookingResp
         ]
 
 def get_professional_booking_service(db:Session,current_user:User)->list[BookingResponse]:
+
+    if current_user.role != UserRole.PROFESSIONAL:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only professionals can view assigned bookings",
+        )
 
     professional=get_professional_by_user_id(db,current_user.id)
 
@@ -170,7 +188,7 @@ def complete_booking_service(db:Session,current_user:User,booking_id:int,)->Book
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Detail not found")
 
     #find professional
-    professional=get_professional_by_id(db,current_user.id)
+    professional=get_professional_by_user_id(db,current_user.id)
 
     if not professional:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Professional not found")
@@ -189,6 +207,12 @@ def complete_booking_service(db:Session,current_user:User,booking_id:int,)->Book
     return BookingResponse.model_validate(booking)
 
 def cancel_booking_service(db:Session,current_user:User,booking_id:int)->BookingResponse:
+    if current_user.role != UserRole.CUSTOMER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only customers can cancel bookings",
+        )
+
     booking=get_booking_by_id(db,booking_id)
 
     if not booking:
@@ -234,7 +258,7 @@ def get_booking_details_service(
 
     # professional can view their assigned bookings
     if current_user.role==UserRole.PROFESSIONAL:
-        professional=get_professional_by_id(db,current_user.id)
+        professional=get_professional_by_user_id(db,current_user.id)
 
         if not professional:
             raise HTTPException(
