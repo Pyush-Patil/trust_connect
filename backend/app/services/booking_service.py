@@ -1,12 +1,12 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-
+from datetime import datetime, timedelta
 from app.models.booking_model import Booking
 from app.models.user_models import User
 
 from app.core.enums import BookingStatus, VerificationStatus,UserRole
 
-from app.repositores.booking_repositores import (create_booking,get_customer_booking,get_professional_booking,get_booking_by_id,update_booking_status,get_all_bookings)
+from app.repositores.booking_repositores import (create_booking,get_customer_booking,get_professional_booking,get_booking_by_id,update_booking_status,get_all_bookings,get_active_booking_for_date)
 from app.repositores.professional_repository import (get_professional_by_user_id,get_professional_by_id)
 
 from app.schemas.booking_schema import (BookingCreateRequest,BookingResponse)
@@ -33,6 +33,28 @@ def create_customer_booking_service(db:Session, current_user:User,data:BookingCr
     #professional user's account must be active 
     if not professional.user.is_active:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Professional account is not inactive")
+
+    # Booking conflict logic starts from here
+    booking_start=datetime.combine(data.booking_date,data.start_time)
+    booking_end=booking_start+timedelta(hours=data.duration_hours)
+
+    existing_bookings=get_active_booking_for_date(db,professional.id,data.booking_date)
+
+    for existing_booking in existing_bookings:
+        existing_start = datetime.combine(
+            existing_booking.booking_date,
+            existing_booking.start_time
+        )
+        existing_end=existing_start+timedelta(
+            hours=existing_booking.duration_hours
+        )
+
+        if booking_start< existing_end and booking_end > existing_start:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Professional is already booked for this time"
+            )
+
 
     #calculate amount 
     total_amount=(professional.hourly_rate * data.duration_hours)

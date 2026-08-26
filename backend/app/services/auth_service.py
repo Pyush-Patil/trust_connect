@@ -102,8 +102,7 @@ def register_professional(
         email=data.email,
         phone_no=data.phone_no,
         password_hash=hashed_password,
-        role=UserRole.PROFESSIONAL
-,
+        role=UserRole.PROFESSIONAL,
     )
 
     try:

@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
+from datetime import date
 
 from app.models.booking_model import Booking
 from app.core.enums import BookingStatus
@@ -41,3 +42,15 @@ def update_booking_status(db:Session,booking:Booking,status:BookingStatus,)->Boo
 
 def get_all_bookings(db: Session):
     return list(db.scalars(select(Booking)).all())
+
+def get_active_booking_for_date(db:Session,professional_id:int,booking_date:date,)->list[Booking]:
+    statement=select(Booking).where(
+        Booking.professional_id==professional_id,
+        Booking.booking_date==booking_date,
+        Booking.status.in_([
+            BookingStatus.PENDING,
+            BookingStatus.ACCEPTED
+        ]),
+    )
+
+    return list(db.scalars(statement).all())
