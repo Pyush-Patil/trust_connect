@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import DateTime, Enum, ForeignKey, Integer, String, func
+from sqlalchemy import DateTime, Enum, ForeignKey, Integer, String, func, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.enums import VerificationStatus
@@ -77,6 +77,17 @@ class ProfessionalProfile(Base):
     pincode: Mapped[str] = mapped_column(
         String(10),
         nullable=False,
+    )
+
+    is_available: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        nullable=False
+    )
+
+    available_from: Mapped[datetime | None] = mapped_column(
+    DateTime,
+    nullable=True
     )
 
     created_at: Mapped[datetime] = mapped_column(

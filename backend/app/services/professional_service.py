@@ -78,7 +78,7 @@ def search_professional_service(
     professionals=search_professionals(db,category,city,state,min_rate,max_rate,)
 
     response=[]
-    for professional in professionals:
+    for professional, average_rating, review_count in professionals:
         professional_response=ProfessionalResponse(
             id=professional.id,
             first_name=professional.user.first_name,
@@ -92,6 +92,16 @@ def search_professional_service(
             city=professional.city,
             state=professional.state,
             created_at=professional.created_at,
+
+            average_rating=(
+                round(float(average_rating), 2)
+                if average_rating is not None
+                else None
+            ),
+            review_count=review_count,
+
+            is_available=professional.is_available,
+            available_from=professional.available_from,
         )
         response.append(professional_response)
     return response

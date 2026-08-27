@@ -16,6 +16,10 @@ class ProfessionalResponse(BaseModel):
     verification_status: VerificationStatus
     city: str
     state: str
+    average_rating: float | None
+    review_count: int
+    is_available: bool
+    available_from: datetime | None
     created_at: datetime
 
     model_config=ConfigDict(from_attributes=True)

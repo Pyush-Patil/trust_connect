@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from app.models.booking_model import Booking
 from app.models.user_models import User
 
+
 from app.core.enums import BookingStatus, VerificationStatus,UserRole
 
 from app.repositores.booking_repositores import (create_booking,get_customer_booking,get_professional_booking,get_booking_by_id,update_booking_status,get_all_bookings,get_active_booking_for_date)
@@ -145,6 +146,17 @@ def accept_booking_service(db:Session,current_user:User,booking_id:int)->Booking
     #change status
     booking=update_booking_status(db,booking,BookingStatus.ACCEPTED)
 
+    # toggle availability and update available from
+    professional.is_available = False
+
+    professional.available_from = (
+    datetime.combine(
+        booking.booking_date,
+        booking.start_time
+    )
+    + timedelta(hours=booking.duration_hours)
+    )
+
     return BookingResponse.model_validate(booking)
 
 def reject_booking_service(
@@ -196,6 +208,9 @@ def reject_booking_service(
     booking.status = BookingStatus.REJECTED
     booking.rejection_reason = reason
 
+    professional.is_available = True
+    professional.available_from = None
+
     db.commit()
     db.refresh(booking)
 
@@ -226,6 +241,9 @@ def complete_booking_service(db:Session,current_user:User,booking_id:int,)->Book
     #change status
     booking=update_booking_status(db,booking,BookingStatus.COMPLETED)
 
+    professional.is_available = True
+    professional.available_from = None
+
     return BookingResponse.model_validate(booking)
 
 def cancel_booking_service(db:Session,current_user:User,booking_id:int)->BookingResponse:
@@ -244,11 +262,28 @@ def cancel_booking_service(db:Session,current_user:User,booking_id:int)->Booking
     if booking.customer_id!=current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="You are not authorized to cancel this booking",)
 
-    # only pending booking can be cancelled
-    if booking.status!=BookingStatus.PENDING:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="only pending bookings can be cancelled")
+     # Customer can cancel pending or accepted booking
+    if booking.status not in [
+        BookingStatus.PENDING,
+        BookingStatus.ACCEPTED
+    ]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only pending or accepted bookings can be cancelled"
+        )
+
+    professional = get_professional_by_id(db,booking.professional_id)
+
     #change status 
     booking=update_booking_status(db,booking,BookingStatus.CANCELLED)
+
+    # If booking was accepted, professional becomes available again
+    if professional:
+        professional.is_available = True
+        professional.available_from = None
+
+    db.commit()
+    db.refresh(booking)
 
     return BookingResponse.model_validate(booking)
 
