@@ -7,6 +7,8 @@ from app.models.review_model import Review
 from app.models.user_models import User
 from app.schemas.review_schema import ReviewCreateRequest, ReviewResponse, RatingSummaryResponse
 from app.repositores.review_repositories import (create_review,get_review_by_booking,get_reviews_by_professional, get_professional_rating)
+from app.repositores.professional_repository import get_professional_by_id
+from app.services.notification_service import create_notificaton_service
 
 def create_review_service(
         db:Session,
@@ -67,6 +69,16 @@ def create_review_service(
     #save review
     review=create_review(db,review)
 
+    professional=get_professional_by_id(db,booking.professional_id)
+    #notify professional a review has beed added
+    create_notificaton_service(
+    db=db,
+    user_id=professional.user_id,
+    title="New Review",
+    message=f"You received a {data.rating}-star review from "
+            f"{current_user.first_name} {current_user.last_name}."
+)
+    
     return ReviewResponse.model_validate(review)
 
 def get_reviews_by_professional_service(db:Session,professional_id:int)->list[ReviewResponse]:

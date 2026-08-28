@@ -9,6 +9,7 @@ from app.core.enums import BookingStatus, VerificationStatus,UserRole
 
 from app.repositores.booking_repositores import (create_booking,get_customer_booking,get_professional_booking,get_booking_by_id,update_booking_status,get_all_bookings,get_active_booking_for_date)
 from app.repositores.professional_repository import (get_professional_by_user_id,get_professional_by_id)
+from app.services.notification_service import create_notificaton_service
 
 from app.schemas.booking_schema import (BookingCreateRequest,BookingResponse)
 
@@ -81,6 +82,14 @@ def create_customer_booking_service(db:Session, current_user:User,data:BookingCr
     #save booking 
     booking=create_booking(db,booking,)
 
+    #notify professional
+    create_notificaton_service(
+    db=db,
+    user_id=professional.user_id,
+    title="New Booking Request",
+    message=f"You have received a new booking request from {current_user.first_name} {current_user.last_name}."
+)
+
     return BookingResponse.model_validate(booking)
 
 def get_customer_booking_service(db:Session,current_user:User)->list[BookingResponse]:
@@ -146,6 +155,14 @@ def accept_booking_service(db:Session,current_user:User,booking_id:int)->Booking
     #change status
     booking=update_booking_status(db,booking,BookingStatus.ACCEPTED)
 
+    #notify customer that booking has been accepted
+    create_notificaton_service(
+        db=db,
+        user_id=booking.customer_id,
+        title="Booking Accepted",
+        message="Your booking request has been accepted by the professional"
+    )
+
     # toggle availability and update available from
     professional.is_available = False
 
@@ -156,6 +173,9 @@ def accept_booking_service(db:Session,current_user:User,booking_id:int)->Booking
     )
     + timedelta(hours=booking.duration_hours)
     )
+
+    db.commit()
+    db.refresh(booking)
 
     return BookingResponse.model_validate(booking)
 
@@ -208,6 +228,14 @@ def reject_booking_service(
     booking.status = BookingStatus.REJECTED
     booking.rejection_reason = reason
 
+    #notify professional
+    create_notificaton_service(
+    db=db,
+    user_id=booking.customer_id,
+    title="Booking Rejected",
+    message="Your booking request has been rejected by the professional"
+)
+
     professional.is_available = True
     professional.available_from = None
 
@@ -240,6 +268,14 @@ def complete_booking_service(db:Session,current_user:User,booking_id:int,)->Book
 
     #change status
     booking=update_booking_status(db,booking,BookingStatus.COMPLETED)
+
+    #notify customer booking has been completed
+    create_notificaton_service(
+    db=db,
+    user_id=booking.customer_id,
+    title="Booking Completed",
+    message="Your booking has been marked as completed."
+)
 
     professional.is_available = True
     professional.available_from = None
@@ -274,13 +310,22 @@ def cancel_booking_service(db:Session,current_user:User,booking_id:int)->Booking
 
     professional = get_professional_by_id(db,booking.professional_id)
 
+    previous_status = booking.status
+
     #change status 
     booking=update_booking_status(db,booking,BookingStatus.CANCELLED)
 
-    # If booking was accepted, professional becomes available again
-    if professional:
+    if previous_status == BookingStatus.ACCEPTED:
         professional.is_available = True
         professional.available_from = None
+
+    #notify professinal booking has cancelled
+    create_notificaton_service(
+        db=db,
+        user_id=professional.user_id,
+        title="Booking Cancelled",
+        message="A customer has cancelled their booking."
+    )
 
     db.commit()
     db.refresh(booking)
