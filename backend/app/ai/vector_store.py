@@ -2,15 +2,19 @@ import os
 import json
 import faiss
 import numpy as np
+from pathlib import Path
 
-from chunker import chunk_text
-from embeddings import generate_embedding
+from .chunker import chunk_text
+from .embeddings import generate_embedding
 
 
-VECTOR_STORE_DIR = "data/vector_store"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_DIR = PROJECT_ROOT / "data"
 
-INDEX_PATH = os.path.join(VECTOR_STORE_DIR, "faiss.index")
-METADATA_PATH = os.path.join(VECTOR_STORE_DIR, "metadata.json")
+VECTOR_STORE_DIR = DATA_DIR / "vector_store"
+
+INDEX_PATH = VECTOR_STORE_DIR / "faiss.index"
+METADATA_PATH = VECTOR_STORE_DIR / "metadata.json"
 
 
 def prepare_chunks(documents):
@@ -62,9 +66,8 @@ def create_vector_store(documents):
 
     index.add(embeddings)
 
-    faiss.write_index(index, INDEX_PATH)
-
-    with open(METADATA_PATH, "w", encoding="utf-8") as file:
+    faiss.write_index(index, str(INDEX_PATH))
+    with open(METADATA_PATH,"w", encoding="utf-8") as file:
         json.dump(
             chunks,
             file,
@@ -78,16 +81,19 @@ def create_vector_store(documents):
 
 
 def load_vector_store():
+    index = faiss.read_index(str(INDEX_PATH))
 
-    index = faiss.read_index(INDEX_PATH)
-
-    with open(METADATA_PATH, "r", encoding="utf-8") as file:
-        chunks = json.load(file)
+    with open(str(METADATA_PATH), "r", encoding="utf-8") as f:
+        chunks = json.load(f)
 
     return index, chunks
 
 
-def search_similar_chunks(query, top_k=3):
+def search_similar_chunks(
+    query,
+    top_k=3,
+    source_filter=None
+):
 
     index, chunks = load_vector_store()
 
@@ -97,24 +103,118 @@ def search_similar_chunks(query, top_k=3):
         [query_embedding]
     ).astype("float32")
 
-    distances, indices = index.search(
+    # --------------------------------
+    # If no filter is provided
+    # search normally
+    # --------------------------------
+
+    if source_filter is None:
+
+        distances, indices = index.search(
+            query_vector,
+            top_k
+        )
+
+        results = []
+
+        for distance, index_position in zip(
+            distances[0],
+            indices[0]
+        ):
+
+            if index_position == -1:
+                continue
+
+            results.append({
+                "text": chunks[index_position]["text"],
+                "source": chunks[index_position]["source"],
+                "distance": float(distance)
+            })
+
+        return results
+
+    # --------------------------------
+    # Filter chunks by source
+    # --------------------------------
+
+    filtered_chunks = []
+
+    filtered_indices = []
+
+    for index_position, chunk in enumerate(chunks):
+
+        if source_filter.lower() in chunk["source"].lower():
+
+            filtered_chunks.append(chunk)
+            filtered_indices.append(index_position)
+
+    # --------------------------------
+    # No matching source
+    # --------------------------------
+
+    if not filtered_chunks:
+        return []
+
+    # --------------------------------
+    # Generate embeddings for filtered
+    # chunks
+    # --------------------------------
+
+    filtered_embeddings = []
+
+    for chunk in filtered_chunks:
+
+        embedding = generate_embedding(
+            chunk["text"]
+        )
+
+        filtered_embeddings.append(
+            embedding
+        )
+
+    filtered_embeddings = np.array(
+        filtered_embeddings
+    ).astype("float32")
+
+    # --------------------------------
+    # Search only filtered chunks
+    # --------------------------------
+
+    filtered_index = faiss.IndexFlatL2(
+        filtered_embeddings.shape[1]
+    )
+
+    filtered_index.add(
+        filtered_embeddings
+    )
+
+    search_k = min(
+        top_k,
+        len(filtered_chunks)
+    )
+
+    distances, indices = filtered_index.search(
         query_vector,
-        top_k
+        search_k
     )
 
     results = []
 
-    for distance, index_position in zip(
+    for distance, filtered_position in zip(
         distances[0],
         indices[0]
     ):
 
-        if index_position == -1:
+        if filtered_position == -1:
             continue
 
+        original_position = filtered_indices[
+            filtered_position
+        ]
+
         results.append({
-            "text": chunks[index_position]["text"],
-            "source": chunks[index_position]["source"],
+            "text": chunks[original_position]["text"],
+            "source": chunks[original_position]["source"],
             "distance": float(distance)
         })
 

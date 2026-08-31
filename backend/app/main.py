@@ -16,6 +16,7 @@ from app.api.booking import router as booking_router
 from app.api.category import router as category_router
 from app.api.review import router as Review_router
 from app.api.notification import router as Notification_router
+from app.api.ai import router as ai_router
 
 app.include_router(auth_router)
 app.include_router(professional_router)
@@ -24,6 +25,7 @@ app.include_router(booking_router)
 app.include_router(category_router)
 app.include_router(Review_router)
 app.include_router(Notification_router)
+app.include_router(ai_router)
 
 @app.get("/db-test")
 def db_test():

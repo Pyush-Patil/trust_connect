@@ -1,5 +1,4 @@
-from vector_store import search_similar_chunks
-
+from .vector_store import search_similar_chunks
 
 def retrieve_knowledge(query, top_k=3):
     """

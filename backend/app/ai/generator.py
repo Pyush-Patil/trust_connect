@@ -1,14 +1,7 @@
-from transformers import pipeline, GenerationConfig
+from transformers import pipeline
+from .pricing import get_service_price
 
 # Load the language model once
-generator = pipeline(
-    "text-generation",
-    model="Qwen/Qwen2.5-0.5B-Instruct"
-)
-
-from transformers import pipeline, GenerationConfig
-
-
 generator = pipeline(
     "text-generation",
     model="Qwen/Qwen2.5-0.5B-Instruct"
@@ -17,7 +10,7 @@ generator = pipeline(
 
 def extract_field(text, field_name, next_fields):
     """
-    Extract a field from our structured troubleshooting chunk.
+    Extract a field from a structured troubleshooting chunk.
     """
 
     start_marker = f"{field_name}:"
@@ -36,7 +29,56 @@ def extract_field(text, field_name, next_fields):
     return value.strip()
 
 
-def generate_answer(query, results):
+def extract_price(text):
+    """
+    Extract price information from a pricing chunk.
+
+    Example:
+    Installation Tap Washer / Jumper
+    Unit: One
+    Price: ₹150
+    """
+
+    # Look for explicit price markers first
+    for marker in ["Price:", "price:", "₹"]:
+        if marker in text:
+            if marker == "₹":
+                value = text.split("₹", 1)[1]
+
+                # Keep only the numeric/range portion
+                result = ""
+
+                for char in value:
+                    if char.isdigit() or char in "-–,.":
+                        result += char
+                    else:
+                        break
+
+                if result:
+                    return f"₹{result}"
+
+            else:
+                value = text.split(marker, 1)[1].strip()
+
+                result = ""
+
+                for char in value:
+                    if char.isdigit() or char in "-–,.":
+                        result += char
+                    else:
+                        break
+
+                if result:
+                    return f"₹{result}"
+
+    # Pricing document may say "Upon Inspection"
+    if "Upon Inspection" in text:
+        return "Upon Inspection"
+
+    return ""
+
+
+def generate_answer(query, results, price=None):
     """
     Generate a reliable structured answer
     from the most relevant retrieved chunk.
@@ -51,7 +93,9 @@ def generate_answer(query, results):
             "Recommended Action:\n"
             "No relevant information available.\n\n"
             "Recommended Service:\n"
-            "No relevant information available."
+            "No relevant information available.\n\n"
+            "Estimated Price:\n"
+            "Price unavailable"
         )
 
     # Best retrieved result
@@ -105,8 +149,28 @@ def generate_answer(query, results):
     if not service:
         service = "No relevant information available."
 
+    if price is None:
+        price = []
+
+    # Format multiple service prices
+    if price:
+        price_lines = []
+
+        for item in price:
+            service_name = item["service"]
+            service_price = item["price"]
+
+            price_lines.append(
+                f"{service_name}: {service_price}"
+            )
+
+        formatted_price = "\n".join(price_lines)
+    else:
+        formatted_price = "Price unavailable"
+
+
     answer = f"""Problem:
-{query}
+   {query}
 
 Possible Causes:
 {causes}
@@ -115,6 +179,9 @@ Recommended Action:
 {action}
 
 Recommended Service:
-{service}"""
+{service}
+
+Estimated Price:
+{formatted_price}"""
 
     return answer
