@@ -25,6 +25,10 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    # AI price-estimation configuration
+    openai_api_key: str | None = None
+    ai_model: str = "gpt-4.1-mini"
+
     @property
     def DATABASE_URL(self) -> str:
         return f"mysql+pymysql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"

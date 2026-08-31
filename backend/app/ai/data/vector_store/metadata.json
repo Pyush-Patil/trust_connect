@@ -1,0 +1,262 @@
+[
+  {
+    "text": "Service: Electrical\n\nProblem:\nMCB keeps tripping\n\nPossible Causes:\nOverload, short circuit, faulty appliance, or wiring fault.\n\nRecommended Solution / Action:\nDisconnect recently added appliances and avoid repeatedly resetting a tripping breaker. Have an electrician inspect the circuit if it trips again.\n\nRelevant Service:\nMCB / Fuse Fixing",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nLights are flickering\n\nPossible Causes:\nLoose connection, overloaded circuit, failing lamp, or supply issue.\n\nRecommended Solution / Action:\nSwitch off the affected circuit if there is heat/sparking and arrange professional inspection.\n\nRelevant Service:\nElectrical inspection / wiring repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nSocket is not working\n\nPossible Causes:\nTripped breaker, loose connection, damaged socket, or wiring fault.\n\nRecommended Solution / Action:\nCheck the relevant breaker once. Do not open live electrical fittings; use a qualified electrician for diagnosis.\n\nRelevant Service:\nElectrical repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nSwitch or socket feels hot\n\nPossible Causes:\nLoose connection, overload, damaged component, or wiring issue.\n\nRecommended Solution / Action:\nStop using the fitting and switch off the circuit if safe. Arrange prompt electrician inspection.\n\nRelevant Service:\nElectrical inspection",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nBurning smell or sparks\n\nPossible Causes:\nElectrical fault, damaged insulation, loose connection, or overloaded fitting.\n\nRecommended Solution / Action:\nTurn off power to the affected circuit if safe and seek professional electrical service. Do not continue using it.\n\nRelevant Service:\nElectrical inspection / repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nFan not working\n\nPossible Causes:\nPower/switch issue, capacitor, regulator, wiring, or motor fault.\n\nRecommended Solution / Action:\nCheck power availability; further diagnosis and component replacement should be done by an electrician.\n\nRelevant Service:\nFan repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nFan runs slowly\n\nPossible Causes:\nWeak capacitor, low voltage, mechanical resistance, or motor issue.\n\nRecommended Solution / Action:\nHave the fan and capacitor inspected rather than replacing parts blindly.\n\nRelevant Service:\nFan repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nGeyser not heating\n\nPossible Causes:\nPower supply, thermostat, heating element, or wiring issue.\n\nRecommended Solution / Action:\nSwitch off power before any inspection. A technician should test the heating circuit and components.\n\nRelevant Service:\nGeyser installation/repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nTube light not working\n\nPossible Causes:\nLamp, starter/driver, holder, ballast, or wiring fault.\n\nRecommended Solution / Action:\nCheck the lamp only when power is off; use an electrician for wiring or fixture faults.\n\nRelevant Service:\nTube Light Fixing",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nDoor bell not working\n\nPossible Causes:\nPower supply, switch, wiring, transformer, or bell unit fault.\n\nRecommended Solution / Action:\nCheck the switch/breaker; electrician can test the low-voltage circuit and unit.\n\nRelevant Service:\nDoor Bell Installation/repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nTV has no power after installation\n\nPossible Causes:\nPower outlet, plug, cable, mounting/installation connection, or device fault.\n\nRecommended Solution / Action:\nCheck outlet and connections without opening the TV. Professional inspection is appropriate for wiring issues.\n\nRelevant Service:\nTelevision Installation",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Electrical\n\nProblem:\nMCB/fuse replacement needed\n\nPossible Causes:\nRepeated failure may indicate an underlying overload or fault rather than only a bad fuse/MCB.\n\nRecommended Solution / Action:\nDo not simply replace repeatedly; identify the cause with professional inspection.\n\nRelevant Service:\nMCB / Fuse Fixing",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nTap / faucet is leaking\n\nPossible Causes:\nWorn washer, damaged cartridge, loose connection, or seal failure.\n\nRecommended Solution / Action:\nShut the tap/supply if leakage is severe; inspect washer/cartridge and replace damaged components.\n\nRelevant Service:\nTap Washer / Jumper; Angle Cock",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nWater dripping after tap is closed\n\nPossible Causes:\nWorn washer/cartridge or damaged valve seat.\n\nRecommended Solution / Action:\nReplace the worn internal component; persistent leakage needs plumber inspection.\n\nRelevant Service:\nTap Washer / Jumper",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nDrain is blocked\n\nPossible Causes:\nAccumulated debris, grease, hair, or blockage in the pipe/trap.\n\nRecommended Solution / Action:\nRemove accessible debris and avoid unsafe chemical mixing. Persistent blockage may require professional cleaning.\n\nRelevant Service:\nDrain / trap cleaning",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nLow water pressure\n\nPossible Causes:\nPartially closed valve, clogged aerator/filter, pipe restriction, or supply issue.\n\nRecommended Solution / Action:\nCheck accessible valves/aerators. If pressure remains low, inspect the plumbing system.\n\nRelevant Service:\nPipeline Fixing / inspection",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nWash basin is leaking\n\nPossible Causes:\nLoose connection, worn seal, trap/pipe issue, or damaged fitting.\n\nRecommended Solution / Action:\nIdentify the leaking joint and replace the failed seal/fitting; professional inspection may be needed.\n\nRelevant Service:\nWash Basin Installation / Pipeline Fixing",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nWater tank leaking\n\nPossible Causes:\nCracked tank, faulty outlet, loose fitting, or pipe connection.\n\nRecommended Solution / Action:\nIsolate water supply if necessary and inspect tank and connections.\n\nRelevant Service:\nWater Tank Installation",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nToilet is leaking\n\nPossible Causes:\nWorn seal, flush component, closet bend, or connection issue.\n\nRecommended Solution / Action:\nStop the leak at the supply if needed and inspect the flush/connection components.\n\nRelevant Service:\nWestern Commode / Closet Bend repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nToilet is not flushing properly\n\nPossible Causes:\nBlocked trap, faulty flush mechanism, poor water supply, or siphon issue.\n\nRecommended Solution / Action:\nCheck water supply and flush mechanism; blockage or component failure may require a plumber.\n\nRelevant Service:\nWestern Commode service",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nShower has weak flow\n\nPossible Causes:\nBlocked shower head, low supply pressure, valve restriction, or pipe issue.\n\nRecommended Solution / Action:\nClean accessible shower head and check supply; persistent low flow requires inspection.\n\nRelevant Service:\nShower Fitting",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nWater is backing up in bathroom\n\nPossible Causes:\nBlocked drain/trap or restricted waste line.\n\nRecommended Solution / Action:\nStop adding water and arrange drain inspection/cleaning; pressure-machine cleaning may be required.\n\nRelevant Service:\nWater Blockage / Nani Trap Cleaning",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nPipe connection is leaking\n\nPossible Causes:\nLoose joint, failed washer/seal, cracked fitting, or pipe damage.\n\nRecommended Solution / Action:\nTurn off the relevant water supply and repair/replace the faulty connection.\n\nRelevant Service:\nPipeline Fixing / Pipe Fitting",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Plumbing\n\nProblem:\nWall has damp patch near bathroom\n\nPossible Causes:\nConcealed plumbing leak, failed waterproofing, external seepage, or condensation.\n\nRecommended Solution / Action:\nIdentify and fix the moisture source before repainting; concealed leaks require professional inspection.\n\nRelevant Service:\nLeakage Repair / waterproofing-related inspection",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC is running but not cooling\n\nPossible Causes:\nDirty filter/coil, restricted airflow, low refrigerant, thermostat/sensor issue, or component fault.\n\nRecommended Solution / Action:\nStart with filter/coil inspection and cleaning. If cooling remains poor, have refrigerant and components professionally checked.\n\nRelevant Service:\nRegular Service; Deep Chemical Wash; Gas Refill; Component Repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC leaking water indoors\n\nPossible Causes:\nClogged condensate drain, frozen evaporator coil from restricted airflow/low refrigerant, or damaged drain pan.\n\nRecommended Solution / Action:\nStop the source of water if necessary and arrange drain/coil inspection. Do not ignore recurring leakage.\n\nRelevant Service:\nRegular Service / repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC making loud or unusual noise\n\nPossible Causes:\nIndoor/outdoor fan issue, loose component, motor problem, or compressor/component fault.\n\nRecommended Solution / Action:\nTurn off the unit if the noise is severe and arrange technician diagnosis.\n\nRelevant Service:\nComponent Repair / Fan Motor Replacement",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC has weak airflow\n\nPossible Causes:\nDirty filter/coil, blocked airflow path, fan problem, or duct/installation issue.\n\nRecommended Solution / Action:\nClean accessible filter and arrange professional service if airflow remains weak.\n\nRelevant Service:\nRegular Service / Deep Chemical Wash",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nProblem\n\nPossible Causes:\nPossible Causes\n\nRecommended Solution / Action:\nRecommended Solution / Action\n\nRelevant Service:\nRelevant Service",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC freezes or develops ice\n\nPossible Causes:\nRestricted airflow, dirty filter/coil, or low refrigerant can contribute.\n\nRecommended Solution / Action:\nTurn off cooling and allow ice to melt; technician should identify the underlying cause before restarting normal operation.\n\nRelevant Service:\nRegular Service / Gas Refill",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC gas/refrigerant may be low\n\nPossible Causes:\nLeakage or insufficient refrigerant charge can reduce cooling.\n\nRecommended Solution / Action:\nA technician should check for leakage and refrigerant pressure rather than simply adding gas repeatedly.\n\nRelevant Service:\nGas Refill",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC outdoor unit not running\n\nPossible Causes:\nPower supply, electrical control, capacitor, fan/compressor or other component issue.\n\nRecommended Solution / Action:\nCheck the dedicated power supply if safe; component diagnosis should be performed by a technician.\n\nRelevant Service:\nPCB Repair / Component Repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC turns on and off frequently\n\nPossible Causes:\nThermostat/sensor issue, airflow restriction, incorrect sizing, or system fault.\n\nRecommended Solution / Action:\nCheck filter/airflow and arrange technician diagnosis if cycling continues.\n\nRelevant Service:\nRegular Service / Component Repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC has bad smell\n\nPossible Causes:\nDirty filter/coil, moisture, drain issue, or microbial buildup.\n\nRecommended Solution / Action:\nClean/inspect filters and indoor components; persistent odor requires professional servicing.\n\nRelevant Service:\nRegular Service / Deep Chemical Wash",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: AC Technician\n\nProblem:\nAC remote not controlling unit\n\nPossible Causes:\nWeak batteries, remote issue, sensor issue, or power/control fault.\n\nRecommended Solution / Action:\nReplace batteries and test; if the unit still does not respond, arrange service inspection.\n\nRelevant Service:\nAC Service",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nDoor is sagging or not closing smoothly\n\nPossible Causes:\nLoose/worn hinges, misalignment, or frame movement.\n\nRecommended Solution / Action:\nInspect and tighten/replace hinges and realign the door as required.\n\nRelevant Service:\nNew Hinges Fitting / Door Repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nDoor hinge is squeaking\n\nPossible Causes:\nDry, rusty, or worn hinge hardware.\n\nRecommended Solution / Action:\nLubrication can help minor squeaking; worn hinges should be serviced or replaced.\n\nRelevant Service:\nHinges",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nDoor hinge is loose\n\nPossible Causes:\nStripped screw holes or loose fasteners.\n\nRecommended Solution / Action:\nSecure the hinge appropriately; damaged mounting points may need professional repair.\n\nRelevant Service:\nHinges / Door Repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nDoor lock is difficult to operate\n\nPossible Causes:\nMisalignment, worn lock, loose hardware, or latch issue.\n\nRecommended Solution / Action:\nCheck alignment and hardware; replace/repair the lock if worn.\n\nRelevant Service:\nCylindrical Lock / Latch Fitting",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nDrawer is difficult to open\n\nPossible Causes:\nDamaged/misaligned channel, debris, swelling, or loose drawer components.\n\nRecommended Solution / Action:\nInspect the channel and alignment; replace damaged channel hardware if required.\n\nRelevant Service:\nChannel Fitting In Drawer",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nDrawer door is loose/damaged\n\nPossible Causes:\nLoose fasteners, damaged board, or hinge/fitting problem.\n\nRecommended Solution / Action:\nTighten or repair fittings; replace damaged parts where necessary.\n\nRelevant Service:\nDrawer Door Work",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nWindow/door mesh is damaged\n\nPossible Causes:\nTorn or detached mesh/frame.\n\nRecommended Solution / Action:\nReplace the damaged mesh and secure it to the frame.\n\nRelevant Service:\nJaali Replacement",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nCurtain rod is loose\n\nPossible Causes:\nWeak fixing, unsuitable anchor, or damaged mounting point.\n\nRecommended Solution / Action:\nRefix with appropriate anchors and ensure the wall can support the load.\n\nRelevant Service:\nCurtain Rod Placement",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nFurniture lock/latch is broken\n\nPossible Causes:\nWorn or damaged lock/latch mechanism.\n\nRecommended Solution / Action:\nReplace or refit the appropriate lock/latch.\n\nRelevant Service:\nLatch / Furniture Lock Fitting",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Carpentry\n\nProblem:\nMinor bed/furniture repair needed\n\nPossible Causes:\nLoose joints, damaged fittings, or wear from use.\n\nRecommended Solution / Action:\nInspect joints and hardware; repair or refit affected components.\n\nRelevant Service:\nBed Repair / Furniture repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nPaint is peeling\n\nPossible Causes:\nPoor adhesion, dampness, contamination, incompatible coats, or poor surface preparation.\n\nRecommended Solution / Action:\nRemove loose paint, correct the moisture/surface problem, prepare the surface, prime where appropriate, then repaint.\n\nRelevant Service:\nPainting / waterproofing-related inspection",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nPaint is blistering/bubbling\n\nPossible Causes:\nTrapped moisture/gases, damp wall, thick coating, or insufficient drying.\n\nRecommended Solution / Action:\nIdentify and fix the moisture source, remove damaged coating, allow the surface to dry, and repaint correctly.\n\nRelevant Service:\nPainting / waterproofing-related inspection",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nWhite powder appears on wall (efflorescence)\n\nPossible Causes:\nMoisture carries soluble salts to the surface.\n\nRecommended Solution / Action:\nEliminate the moisture source, clean/prepare the surface, and use an appropriate coating system after it is dry.\n\nRelevant Service:\nPainting / waterproofing-related inspection",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nWall has damp patches\n\nPossible Causes:\nPlumbing leak, rain/external seepage, terrace issue, condensation, or waterproofing failure.\n\nRecommended Solution / Action:\nFind and repair the moisture source before painting; repainting alone may not solve recurrence.\n\nRelevant Service:\nPainting / leakage repair",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nWall has mould/fungal growth\n\nPossible Causes:\nPersistent moisture, condensation, or poor ventilation.\n\nRecommended Solution / Action:\nAddress moisture/ventilation first, clean the affected surface safely, then restore the coating system.\n\nRelevant Service:\nPainting / moisture inspection",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nPest Management\n\nPossible Causes:\nProblem\n\nRecommended Solution / Action:\nPossible Causes\n\nRelevant Service:\nRecommended Solution / Action",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nRelevant Service\n\nPossible Causes:\nCockroaches are appearing\n\nRecommended Solution / Action:\nFood/water access, cracks/harbourage areas, waste, and entry points can support infestations.\n\nRelevant Service:\nImprove sanitation, remove food/water sources, seal entry points, and use professional pest control for persistent infestation.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nCockroach Control\n\nPossible Causes:\nAnt infestation\n\nRecommended Solution / Action:\nAccessible food/water and entry points or nests near the property.\n\nRelevant Service:\nRemove food sources, clean trails, seal entry points, and seek professional treatment for persistent infestation.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nAnt Control\n\nPossible Causes:\nTermite signs\n\nRecommended Solution / Action:\nWood/structural damage, mud tubes, hollow-sounding wood, or discarded wings may indicate termite activity.\n\nRelevant Service:\nDo not rely only on surface treatment; professional inspection is recommended to identify the colony/source and treatment needs.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nTermite Control\n\nPossible Causes:\nBed bugs are present\n\nRecommended Solution / Action:\nBed bugs can hide in mattress seams, furniture, cracks, and other protected areas.\n\nRelevant Service:\nProfessional inspection/treatment is often required. Wash/dry suitable fabrics at high heat and avoid spreading infested items.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nBed Bugs Control\n\nPossible Causes:\nRats/rodents are entering\n\nRecommended Solution / Action:\nFood sources, openings, waste, and sheltered nesting areas.\n\nRelevant Service:\nSeal entry points, remove food access and arrange professional rodent control for active infestation.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nRat Control\n\nPossible Causes:\nGeneral pest infestation\n\nRecommended Solution / Action:\nMultiple pest species may have different harbourage and treatment requirements.\n\nRelevant Service:\nIdentify the pest first, remove food/water sources, improve sanitation, and use targeted professional control where needed.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nGeneral Pest Management\n\nPossible Causes:\nFurniture\n\nRecommended Solution / Action:\nProblem\n\nRelevant Service:\nPossible Causes",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nRecommended Solution / Action\n\nPossible Causes:\nRelevant Service\n\nRecommended Solution / Action:\nBed is loose or unstable\n\nRelevant Service:\nLoose joints, fasteners, damaged components, or assembly wear.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nInspect and tighten/refit joints; replace damaged hardware or parts where necessary.\n\nPossible Causes:\nBed Mantle/Dismantle / Furniture Repair\n\nRecommended Solution / Action:\nBed needs dismantling before shifting\n\nRelevant Service:\nLarge assembled sections may not pass through doors or stairs safely.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nDismantle systematically, retain hardware, and protect components during movement.\n\nPossible Causes:\nDismantle Single/Double/Bunk Bed\n\nRecommended Solution / Action:\nBed needs assembly after shifting\n\nRelevant Service:\nDisassembled components need correct alignment and fastening.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nAssemble according to the original construction and verify stability before use.\n\nPossible Causes:\nMantle Single/Double/Bunk Bed\n\nRecommended Solution / Action:\nShowcase installation is difficult\n\nRelevant Service:\nWall condition, mounting hardware, alignment, or weight/load concerns.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nUse suitable anchors and verify the wall/support can carry the load; professional installation is recommended for heavy units.\n\nPossible Causes:\nShowcase Installation\n\nRecommended Solution / Action:\nChimney installation issue\n\nRelevant Service:\nMounting, alignment, ducting, electrical connection, or wall support may be unsuitable.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nInstallation should be checked for correct mounting and connections; use qualified service where electrical work is involved.\n\nPossible Causes:\nChimney Installation\n\nRecommended Solution / Action:\nNew door installation issue\n\nRelevant Service:\nFrame alignment, hinge position, measurements, or hardware may be incorrect.",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  },
+  {
+    "text": "Service: Painting\n\nProblem:\nCheck opening/frame measurements and hinge/lock alignment; carpenter adjustment may be required.\n\nPossible Causes:\nNew Door Installation\n\nRecommended Solution / Action:\nSource basis: troubleshooting concepts were researched from manufacturer/professional guidance, including Carrier guidance for AC water\n\nRelevant Service:\nleakage and Asian Paints guidance for paint defects and wall dampness, plus EPA guidance for household pest management. The entries have",
+    "source": "C:\\Users\\Piyush\\Desktop\\projectmain\\backend\\data\\troubleshooting\\home_maintenance_troubleshooting.pdf"
+  }
+]
