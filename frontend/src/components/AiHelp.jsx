@@ -10,6 +10,97 @@ const SUGGESTIONS = [
   "Sparking from switchboard",
 ];
 
+const ANSWER_FIELDS = [
+  ["Problem", "Problem"],
+  ["Possible Causes", "Possible Causes"],
+  ["Recommended Action", "Recommended Action"],
+  ["Recommended Solution / Action", "Recommended Action"],
+  ["Recommended Service", "Recommended Service"],
+  ["Estimated Price", "Estimated Price"],
+];
+
+function parseAnswer(text) {
+  const source = String(text ?? "");
+  const firstLabel = ANSWER_FIELDS.find(([label]) => source.includes(`${label}:`));
+  if (!firstLabel) return null;
+
+  const sections = {};
+  const matches = ANSWER_FIELDS
+    .map(([label, key]) => ({ label, key, index: source.indexOf(`${label}:`) }))
+    .filter(({ index }) => index >= 0)
+    .sort((a, b) => a.index - b.index);
+
+  matches.forEach((match, index) => {
+    const start = match.index + match.label.length + 1;
+    const end = matches[index + 1]?.index ?? source.length;
+    const value = source.slice(start, end).trim();
+    if (value && !sections[match.key]) sections[match.key] = value;
+  });
+
+  return sections;
+}
+
+function StructuredAnswer({ text }) {
+  const sections = parseAnswer(text);
+  if (!sections) return <p className="whitespace-pre-wrap">{text}</p>;
+
+  const services = (sections["Recommended Service"] ?? "")
+    .split(";")
+    .map((service) => service.trim())
+    .filter(Boolean);
+  const prices = (sections["Estimated Price"] ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const separator = line.indexOf(":");
+      return separator > -1
+        ? { name: line.slice(0, separator).trim(), price: line.slice(separator + 1).trim() }
+        : { name: "Estimated price", price: line };
+    });
+
+  return (
+    <div className="space-y-3">
+      {sections.Problem && (
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-muted">Problem</p>
+          <p className="mt-1 text-[15px] font-semibold leading-snug text-ink">{sections.Problem}</p>
+        </div>
+      )}
+      {[
+        ["Possible Causes", sections["Possible Causes"]],
+        ["Recommended Action", sections["Recommended Action"]],
+      ].map(([label, value]) => value && (
+        <div key={label}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-muted">{label}</p>
+          <p className="mt-1 leading-relaxed text-soft">{value}</p>
+        </div>
+      ))}
+      {services.length > 0 && (
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-muted">Recommended Service</p>
+          <ul className="mt-1.5 space-y-1">
+            {services.map((service) => <li key={service} className="flex gap-2 leading-relaxed text-soft"><span className="text-muted">•</span><span>{service}</span></li>)}
+          </ul>
+        </div>
+      )}
+      {prices.length > 0 && (
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-muted">Estimated Price</p>
+          <div className="mt-1.5 divide-y divide-line rounded-lg border border-line bg-paper">
+            {prices.map(({ name, price }) => (
+              <div key={`${name}-${price}`} className="flex items-start justify-between gap-3 px-3 py-2 text-[13px]">
+                <span className="text-soft">{name}</span>
+                <span className="shrink-0 font-semibold text-ink">{price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function AiHelp({ open, onClose }) {
   const [messages, setMessages] = useState([
     {
@@ -58,7 +149,7 @@ export function AiHelp({ open, onClose }) {
                     : "rounded-bl-md border border-line bg-shell text-soft",
                 )}
               >
-                <p>{m.text}</p>
+                <StructuredAnswer text={m.text} />
                 {m.steps && (
                   <ol className="mt-3 space-y-2 border-t border-line/80 pt-3">
                     {m.steps.map((s, j) => (
