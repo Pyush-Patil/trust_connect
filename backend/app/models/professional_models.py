@@ -53,6 +53,11 @@ class ProfessionalProfile(Base):
         nullable=True,
     )
 
+    government_id: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
     verification_status: Mapped[VerificationStatus] = mapped_column(
         Enum(VerificationStatus),
         default=VerificationStatus.PENDING,

@@ -46,4 +46,15 @@ def login_api(data:LoginRequest,db: Session=Depends(get_db),):
 def get_my_profile(
     current_user:User=Depends(get_current_user),
 ):
-    return current_user
+    return {
+        "id": current_user.id,
+        "first_name": current_user.first_name,
+        "last_name": current_user.last_name,
+        "email": current_user.email,
+        "phone_no": current_user.phone_no,
+        "role": current_user.role,
+        "is_active": current_user.is_active,
+        "created_at": current_user.created_at,
+        "professional_id": current_user.professional_profile.id if current_user.professional_profile else None,
+        "profile_image": current_user.professional_profile.profile_image if current_user.professional_profile else None,
+    }

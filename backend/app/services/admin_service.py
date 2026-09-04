@@ -42,6 +42,10 @@ def get_pending_professionals_service(db:Session)->list[PendingProfessionalRespo
             hourly_rate=professional.hourly_rate,
             city=professional.city,
             state=professional.state,
+            address=professional.address,
+            pincode=professional.pincode,
+            profile_image=professional.profile_image,
+            government_id=professional.government_id,
             verification_status=professional.verification_status,
         )
         response.append(professional_response)

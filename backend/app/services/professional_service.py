@@ -5,7 +5,7 @@ from app.repositores.professional_repository import (
     get_verified_professional,
     search_professionals
 )
-from app.schemas.professional_schema import ProfessionalResponse
+from app.schemas.professional_schema import ProfessionalResponse, ProfessionalUpdateRequest
 from app.repositores.professional_repository import get_professional_by_id
 from app.core.enums import VerificationStatus
 
@@ -29,6 +29,10 @@ def get_professional_service(db:Session,)->list[ProfessionalResponse]:
             verification_status=professional.verification_status,
             city=professional.city,
             state=professional.state,
+            average_rating=None,
+            review_count=0,
+            is_available=professional.is_available,
+            available_from=professional.available_from,
             created_at=professional.created_at,
         )
 
@@ -63,6 +67,47 @@ def get_professional_by_id_service(db:Session,professional_id:int)->Professional
         verification_status=professional.verification_status,
         city=professional.city,
         state=professional.state,
+        average_rating=None,
+        review_count=0,
+        is_available=professional.is_available,
+        available_from=professional.available_from,
+        created_at=professional.created_at,
+    )
+
+def update_professional_profile_service(
+        db: Session,
+        current_user,
+        data: ProfessionalUpdateRequest,
+):
+    professional = current_user.professional_profile
+    if not professional:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Professional profile not found")
+
+    for field, value in data.model_dump(exclude_unset=True).items():
+        if field in {"first_name", "last_name", "phone_no"}:
+            setattr(current_user, field, value)
+        else:
+            setattr(professional, field, value)
+
+    db.commit()
+    db.refresh(current_user)
+    db.refresh(professional)
+    return ProfessionalResponse(
+        id=professional.id,
+        first_name=current_user.first_name,
+        last_name=current_user.last_name,
+        category=professional.category.name,
+        bio=professional.bio,
+        experience=professional.experience,
+        hourly_rate=professional.hourly_rate,
+        profile_image=professional.profile_image,
+        verification_status=professional.verification_status,
+        city=professional.city,
+        state=professional.state,
+        average_rating=None,
+        review_count=0,
+        is_available=professional.is_available,
+        available_from=professional.available_from,
         created_at=professional.created_at,
     )
 

@@ -1,12 +1,23 @@
 from fastapi import FastAPI    
 from sqlalchemy import text
 from app.core.config import setting
+from fastapi.staticfiles import StaticFiles
 
 from app.database.connection import engine 
 app = FastAPI(
     title="Trust Connect API",
     description="A platform connecting customers with verified service professionals.",
     version="1.0.0",
+)
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origin_regex=r"http://(localhost|127\.0\.0\.1)(:\d+)?$",
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 from app.api.auth import router as auth_router
@@ -26,6 +37,7 @@ app.include_router(category_router)
 app.include_router(Review_router)
 app.include_router(Notification_router)
 app.include_router(ai_router)
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 @app.get("/db-test")
 def db_test():

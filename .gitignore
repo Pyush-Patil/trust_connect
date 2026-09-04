@@ -79,3 +79,36 @@ dist/
 # =====================================
 app/uploads/*
 !app/uploads/.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# =====================================
+# Node.js (Root Dependencies)
+# =====================================
+node_modules/
+package-lock.json
+yarn.lock
+
+# =====================================
+# Generated Data Files
+# =====================================
+backend/data/vector_store/*
+backend/data/pricing/*
+backend/data/troubleshooting/*
+!backend/data/vector_store/.gitkeep
+!backend/data/pricing/.gitkeep
+!backend/data/troubleshooting/.gitkeep
+
+# =====================================
+# Temporary Files
+# =====================================
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# =====================================
+# System-specific Files
+# =====================================
+.env.local
+.env.*.local

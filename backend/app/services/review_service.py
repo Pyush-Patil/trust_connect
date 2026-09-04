@@ -92,7 +92,7 @@ def get_reviews_by_professional_service(db:Session,professional_id:int)->list[Re
 
 def get_professional_rating_service(db:Session,professional_id:int)->RatingSummaryResponse:
     rating_summary=get_professional_rating(db,professional_id)
-    return RatingSummaryResponse(rating_summary)
+    return RatingSummaryResponse(**rating_summary)
 
 
 
