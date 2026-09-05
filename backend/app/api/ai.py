@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from app.ai.rag_pipeline import answer_query
+from app.ai.rag_langchain import answer_query
 
 
 router = APIRouter(

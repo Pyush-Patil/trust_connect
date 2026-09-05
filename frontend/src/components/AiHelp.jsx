@@ -17,7 +17,16 @@ const ANSWER_FIELDS = [
   ["Recommended Solution / Action", "Recommended Action"],
   ["Recommended Service", "Recommended Service"],
   ["Estimated Price", "Estimated Price"],
+  ["Estimated Service Price", "Estimated Price"],
 ];
+
+const NON_SERVICE_ANSWERS = new Set([
+  "professional inspection is required",
+  "professional inspection required",
+  "price unavailable",
+  "none",
+  "n/a",
+]);
 
 function parseAnswer(text) {
   const source = String(text ?? "");
@@ -40,13 +49,23 @@ function parseAnswer(text) {
   return sections;
 }
 
-function StructuredAnswer({ text }) {
-  const sections = parseAnswer(text);
+function StructuredAnswer({ text, answer }) {
+  const sections = answer && typeof answer === "object"
+    ? {
+        Problem: answer.problem,
+        "Possible Causes": answer.causes?.join("\n"),
+        "Recommended Action": answer.actions?.join("\n"),
+        "Recommended Service": answer.services?.join(";"),
+        "Estimated Price": answer.prices?.map(({ service, price }) => `${service}: ${price}`).join("\n"),
+      }
+    : parseAnswer(text);
   if (!sections) return <p className="whitespace-pre-wrap">{text}</p>;
 
   const services = (sections["Recommended Service"] ?? "")
     .split(";")
     .map((service) => service.trim())
+    .map((service) => service.replace(/^[-*]\s*/, "").trim())
+    .filter((service) => !NON_SERVICE_ANSWERS.has(service.toLowerCase().replace(/[.:]+$/, "")))
     .filter(Boolean);
   const prices = (sections["Estimated Price"] ?? "")
     .split("\n")
@@ -57,7 +76,12 @@ function StructuredAnswer({ text }) {
       return separator > -1
         ? { name: line.slice(0, separator).trim(), price: line.slice(separator + 1).trim() }
         : { name: "Estimated price", price: line };
-    });
+      })
+      .filter(({ name, price }) => {
+        const normalizedName = name.toLowerCase().replace(/[.:]+$/, "");
+        const normalizedPrice = price.toLowerCase().replace(/[.:]+$/, "");
+        return !NON_SERVICE_ANSWERS.has(normalizedName) && !NON_SERVICE_ANSWERS.has(normalizedPrice);
+      });
 
   return (
     <div className="space-y-3">
@@ -124,7 +148,15 @@ export function AiHelp({ open, onClose }) {
     setBusy(true);
     try {
       const reply = await api.troubleshoot(issue);
-      setMessages((m) => [...m, { role: "ai", text: reply.answer, steps: reply.steps }]);
+      setMessages((m) => [
+        ...m,
+        {
+          role: "ai",
+          text: typeof reply.answer === "string" ? reply.answer : "",
+          answer: typeof reply.answer === "object" ? { ...reply.answer, problem: reply.problem } : null,
+          steps: reply.steps,
+        },
+      ]);
     } catch (e) {
       setMessages((m) => [
         ...m,
@@ -149,7 +181,7 @@ export function AiHelp({ open, onClose }) {
                     : "rounded-bl-md border border-line bg-shell text-soft",
                 )}
               >
-                <StructuredAnswer text={m.text} />
+                <StructuredAnswer text={m.text} answer={m.answer} />
                 {m.steps && (
                   <ol className="mt-3 space-y-2 border-t border-line/80 pt-3">
                     {m.steps.map((s, j) => (

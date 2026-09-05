@@ -2,16 +2,29 @@ from fastapi import FastAPI
 from sqlalchemy import text
 from app.core.config import setting
 from fastapi.staticfiles import StaticFiles
-
+from app.ai.rag_langchain import create_rag_chain
 from app.database.connection import engine 
+
 app = FastAPI(
     title="Trust Connect API",
     description="A platform connecting customers with verified service professionals.",
     version="1.0.0",
 )
 
-from fastapi.middleware.cors import CORSMiddleware
+@app.on_event("startup")
+def startup_event():
 
+    print("==============================")
+    print("INITIALIZING AI RAG SYSTEM")
+    print("==============================")
+
+    create_rag_chain()
+
+    print("==============================")
+    print("AI RAG SYSTEM READY")
+
+
+from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
     allow_origin_regex=r"http://(localhost|127\.0\.0\.1)(:\d+)?$",
