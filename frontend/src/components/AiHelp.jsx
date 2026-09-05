@@ -97,7 +97,7 @@ function StructuredAnswer({ text, answer }) {
       ].map(([label, value]) => value && (
         <div key={label}>
           <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-muted">{label}</p>
-          <p className="mt-1 leading-relaxed text-soft">{value}</p>
+          <p className="mt-1 whitespace-pre-line leading-relaxed text-soft">{value}</p>
         </div>
       ))}
       {services.length > 0 && (

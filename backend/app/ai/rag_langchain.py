@@ -416,6 +416,37 @@ def _parse_structured_answer(answer):
     }
 
 
+def _context_field(text, label, next_labels):
+    boundary = "|".join(re.escape(item) for item in next_labels)
+    boundary_pattern = rf"\n\s*(?:{boundary}):" if boundary else r"$"
+    match = re.search(
+        rf"{re.escape(label)}:\s*(.*?)(?={boundary_pattern}|$)",
+        text,
+        re.IGNORECASE | re.DOTALL,
+    )
+    return match.group(1).strip() if match else ""
+
+
+def _structured_context(query):
+    documents = retrieve_documents(query)
+    if not documents:
+        return {"causes": [], "actions": [], "services": []}
+
+    text = documents[0].page_content
+    causes = _context_field(
+        text,
+        "Possible Causes",
+        ["Recommended Solution / Action", "Relevant Service"],
+    )
+    actions = _context_field(text, "Recommended Solution / Action", ["Relevant Service"])
+    services = _context_field(text, "Relevant Service", [])
+    return {
+        "causes": _clean_list(re.split(r"[;\n]", causes)) if causes else [],
+        "actions": _clean_list(re.split(r"[;\n]", actions)) if actions else [],
+        "services": _clean_list(services.split(";")) if services else [],
+    }
+
+
 # ============================================================
 # COMPLETE AI ANSWER
 # ============================================================
@@ -438,6 +469,11 @@ def answer_query(query: str):
 
     if structured is None:
         return add_pricing(raw_answer)
+
+    context_answer = _structured_context(query)
+    for key in ("causes", "actions", "services"):
+        if not structured[key]:
+            structured[key] = context_answer[key]
 
     invalid_services = {
         "professional inspection is required",
