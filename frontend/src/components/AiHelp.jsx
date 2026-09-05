@@ -56,7 +56,9 @@ function StructuredAnswer({ text, answer }) {
         "Possible Causes": answer.causes?.join("\n"),
         "Recommended Action": answer.actions?.join("\n"),
         "Recommended Service": answer.services?.join(";"),
-        "Estimated Price": answer.prices?.map(({ service, price }) => `${service}: ${price}`).join("\n"),
+        "Estimated Price": (answer.prices?.length ? answer.prices : (answer.services ?? []).map((service) => ({ service, price: "Price unavailable" })))
+          .map(({ service, price }) => `${service}: ${price}`)
+          .join("\n"),
       }
     : parseAnswer(text);
   if (!sections) return <p className="whitespace-pre-wrap">{text}</p>;
