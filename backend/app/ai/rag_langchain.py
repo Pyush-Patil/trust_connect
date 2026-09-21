@@ -21,12 +21,6 @@ from app.ai.pricing import get_service_prices
 # PATHS
 # ============================================================
 
-# rag_langchain.py
-#     ↓
-# backend
-#     ↓
-# projectmain
-
 PROJECT_DIR = Path(__file__).resolve().parents[3]
 
 BACKEND_DIR = PROJECT_DIR / "backend"

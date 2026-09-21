@@ -21,7 +21,6 @@ def verify_professional_service(db:Session,professional_id:int):
 
     return verify_professional(db,professional)
 
-
 def get_pending_professionals_service(db:Session)->list[PendingProfessionalResponse]:
 
 

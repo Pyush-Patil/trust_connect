@@ -27,6 +27,6 @@ try:
         db.refresh(admin)
 
         print("Admin created successfully")
-        print("Emial:",admin_email)
+        print("Email:",admin_email)
 finally:
     db.close()
