@@ -103,6 +103,9 @@ export default function Dashboard() {
       if (action === "accept") {
         await api.acceptBooking(token, booking.id);
         toast(`Booking ${booking.id} accepted.`);
+      } else if (action === "complete") {
+        await api.completeBooking(token, booking.id);
+        toast(`Booking ${booking.id} completed.`);
       } else {
         const reason = rejectionReason.trim();
         if (!reason) {
@@ -275,6 +278,11 @@ export default function Dashboard() {
                           <Button size="sm" variant="outline" onClick={() => void decideBooking("accept", b)}>Accept</Button>
                           <Button size="sm" variant="danger" onClick={() => setRejectTarget(b)}>Reject</Button>
                         </>
+                      )}
+                      {b.status === "confirmed" && user.role === "professional" && (
+                        <Button size="sm" onClick={() => void decideBooking("complete", b)}>
+                          <Icon name="check" className="h-3.5 w-3.5" /> Mark complete
+                        </Button>
                       )}
                       {b.status === "pending" && user.role === "customer" && (
                         <Button size="sm" variant="danger" onClick={() => setCancelTarget(b)}>Cancel</Button>

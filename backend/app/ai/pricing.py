@@ -4,10 +4,7 @@ from functools import lru_cache
 from pypdf import PdfReader
 
 
-# ============================================================
 # MASTER PRICING PDF
-# ============================================================
-
 PRICING_PDF = (
     Path(__file__).resolve().parents[2]
     / "data"
@@ -16,10 +13,7 @@ PRICING_PDF = (
 )
 
 
-# ============================================================
 # LOAD PRICING PDF
-# ============================================================
-
 @lru_cache(maxsize=1)
 def load_pricing_text():
 
@@ -42,10 +36,7 @@ def load_pricing_text():
     return "\n".join(pages)
 
 
-# ============================================================
 # NORMALIZATION
-# ============================================================
-
 def normalize(text: str) -> str:
 
     text = text.lower()
@@ -66,16 +57,10 @@ def normalize(text: str) -> str:
     return text.strip()
 
 
-# ============================================================
 # SERVICE ALIASES
-# ============================================================
-
 SERVICE_ALIASES = {
 
-    # -------------------------
     # ELECTRICAL
-    # -------------------------
-
     "mcb / fuse fixing": "mcb / fuse fixing",
     "mcb/fuse fixing": "mcb / fuse fixing",
 
@@ -104,10 +89,7 @@ SERVICE_ALIASES = {
     "television installation":
         "tv installation",
 
-    # -------------------------
     # PLUMBING
-    # -------------------------
-
     "cleaning of nani trap":
         "water blockage / nani trap cleaning",
 
@@ -126,10 +108,7 @@ SERVICE_ALIASES = {
     "wash basin installation / pipeline fixing":
         "wash basin installation",
 
-    # -------------------------
     # AC
-    # -------------------------
-
     "ac service":
         "regular service",
 
@@ -148,10 +127,7 @@ SERVICE_ALIASES = {
     "pcb repair":
         "ac pcb repair",
 
-    # -------------------------
     # CARPENTRY
-    # -------------------------
-
     "hinges":
         "new hinges fitting",
 
@@ -173,10 +149,7 @@ SERVICE_ALIASES = {
     "cylindrical lock":
         "cylindrical lock fixing",
 
-    # -------------------------
     # PAINTING
-    # -------------------------
-
     "painting":
         "wall touch-up",
 
@@ -189,20 +162,14 @@ SERVICE_ALIASES = {
     "painting / waterproofing-related inspection":
         "waterproofing inspection",
 
-    # -------------------------
     # PEST CONTROL
-    # -------------------------
-
     "bed bugs control":
         "bed bug treatment",
 
     "rat control":
         "rat / rodent control",
 
-    # -------------------------
     # HOME REPAIR
-    # -------------------------
-
     "crack repair":
         "wall crack repair",
 
@@ -212,10 +179,7 @@ SERVICE_ALIASES = {
     "leakage repair":
         "leakage repair",
 
-    # -------------------------
     # RO
-    # -------------------------
-
     "ro leakage":
         "ro leakage repair",
 
@@ -229,16 +193,10 @@ SERVICE_ALIASES = {
         "ro installation",
 }
 
-# ============================================================
 # ADDITIONAL SERVICE ALIASES
-# ============================================================
-
 SERVICE_ALIASES.update({
 
-    # -------------------------
     # AC
-    # -------------------------
-
     "professional ac servicing":
         "regular service",
 
@@ -251,10 +209,7 @@ SERVICE_ALIASES.update({
     "ac service / inspection":
         "regular service",
 
-    # -------------------------
     # PLUMBING
-    # -------------------------
-
     "professional plumbing inspection and repair":
         "pipeline fixing / pipe fitting",
 
@@ -279,10 +234,7 @@ SERVICE_ALIASES.update({
     "pressure-machine cleaning of the drain line":
         "water blockage / nani trap cleaning",
 
-    # -------------------------
     # CARPENTRY
-    # -------------------------
-
     "drawer channel":
         "drawer channel fitting",
 
@@ -295,10 +247,8 @@ SERVICE_ALIASES.update({
     "broken drawer channel":
         "drawer channel fitting",
 
-    # -------------------------
+    
     # PAINTING
-    # -------------------------
-
     "professional painting/coating service":
         "wall touch-up",
 
@@ -314,10 +264,7 @@ SERVICE_ALIASES.update({
     "waterproofing repair":
         "damp wall treatment",
 
-    # -------------------------
     # PEST CONTROL
-    # -------------------------
-
     "professional inspection and treatment for bed bugs":
         "bed bug treatment",
 
@@ -329,21 +276,17 @@ SERVICE_ALIASES.update({
 
 })
 
-# ============================================================
 # EXTRACT PRICE
-# ============================================================
-
 def extract_price(text: str):
 
     text = text.replace("■", "₹")
 
-    # --------------------------------------------------------
+    
     # Price range
     # Examples:
     # ₹300–₹800
     # ₹300 - ₹800
     # ₹300–800
-    # --------------------------------------------------------
 
     range_match = re.search(
         r"₹\s*[\d,]+\s*[-–]\s*₹?\s*[\d,]+",
@@ -358,10 +301,7 @@ def extract_price(text: str):
 
         return price
 
-    # --------------------------------------------------------
     # Single price
-    # --------------------------------------------------------
-
     price_match = re.search(
         r"₹\s*[\d,]+",
         text
@@ -375,10 +315,7 @@ def extract_price(text: str):
 
         return price
 
-    # --------------------------------------------------------
     # Inspection
-    # --------------------------------------------------------
-
     if "upon inspection" in text.lower():
 
         return "Upon Inspection"
@@ -386,10 +323,7 @@ def extract_price(text: str):
     return None
 
 
-# ============================================================
 # BUILD PRICING LINES
-# ============================================================
-
 @lru_cache(maxsize=1)
 def get_pricing_lines():
 
@@ -402,10 +336,7 @@ def get_pricing_lines():
     ]
 
 
-# ============================================================
 # PRICE LOOKUP
-# ============================================================
-
 def get_service_price(service_name: str):
 
     if not service_name:
@@ -529,10 +460,7 @@ def get_service_price(service_name: str):
 
     return "Price unavailable"
 
-# ============================================================
 # MULTIPLE SERVICE PRICE LOOKUP
-# ============================================================
-
 def get_service_prices(services):
 
     results = []

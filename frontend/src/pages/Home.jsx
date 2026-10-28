@@ -8,10 +8,10 @@ import { Button, Icon, Reveal, Stars } from "../components/ui";
 const px = (id, w, h) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=${w}&h=${h}`;
 
-const HERO_MAIN = px(7647233, 1100, 850);
-const HERO_SMALL = px(7641347, 500, 500);
-const HOW_IMG = px(5591908, 900, 620);
-const BAND_IMG = px(5974275, 1000, 760);
+const HERO_MAIN = px(3964341, 1100, 850);
+const HERO_SMALL = px(5217889, 500, 500);
+const HOW_IMG = px(38292956, 900, 620);
+const BAND_IMG = px(37663438, 1000, 760);
 
 const STEPS = [
   {
@@ -121,12 +121,12 @@ export default function Home() {
           <div className="anim-fade-up d2 relative pb-10 pl-6 pr-4 sm:pl-10">
             <img
               src={HERO_MAIN}
-              alt="Electrician fixing a wall socket at home"
+              alt="Outdoor air conditioning unit ready for service"
               className="aspect-[4/3] w-full rounded-2xl border border-line object-cover shadow-card"
             />
             <img
               src={HERO_SMALL}
-              alt="Professional cleaning a kitchen"
+              alt="Household cleaning products and supplies"
               className="absolute -bottom-2 left-0 hidden h-36 w-36 rounded-xl border-4 border-paper object-cover shadow-lift sm:block"
             />
             <div className="absolute -top-5 right-2 rounded-xl border border-line bg-paper px-4 py-3 shadow-lift">
@@ -179,7 +179,7 @@ export default function Home() {
               >
                 <img
                   src={SERVICE_IMAGES[s]}
-                  alt={`${s} service at home`}
+                  alt={`${s} service equipment and tools`}
                   loading="lazy"
                   className="aspect-[4/3] w-full object-cover opacity-90 transition-all duration-500 group-hover:scale-[1.05] group-hover:opacity-100"
                 />
@@ -235,7 +235,7 @@ export default function Home() {
               <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">
                 No phone tag, no haggling, no strangers without IDs. The whole journey lives in this app — search to review.
               </p>
-              <img src={HOW_IMG} alt="Professional cleaning a kitchen counter" className="mt-8 hidden aspect-[3/2] w-full rounded-2xl border border-line object-cover lg:block" />
+              <img src={HOW_IMG} alt="Electrical testing equipment and hand tools" className="mt-8 hidden aspect-[3/2] w-full rounded-2xl border border-line object-cover lg:block" />
             </div>
           </div>
           <div className="lg:col-span-7">
@@ -302,7 +302,7 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={120} className="relative">
-            <img src={BAND_IMG} alt="Carpenter cutting a joint with a chisel" className="aspect-[4/3] w-full rounded-2xl object-cover opacity-95" />
+            <img src={BAND_IMG} alt="Carpentry hand tools arranged on a workbench" className="aspect-[4/3] w-full rounded-2xl object-cover opacity-95" />
             <div className="absolute -bottom-6 left-6 rounded-xl border border-line bg-paper px-5 py-4 text-ink shadow-lift">
               <p className="font-display text-2xl font-extrabold">₹18,400</p>
               <p className="mt-0.5 text-xs font-medium text-muted">avg monthly earnings, verified pros</p>

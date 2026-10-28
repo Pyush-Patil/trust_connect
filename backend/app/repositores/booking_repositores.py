@@ -54,3 +54,14 @@ def get_active_booking_for_date(db:Session,professional_id:int,booking_date:date
     )
 
     return list(db.scalars(statement).all())
+
+def get_active_bookings_for_professional(db:Session,professional_id:int)->list[Booking]:
+    statement=select(Booking).where(
+        Booking.professional_id==professional_id,
+        Booking.status.in_([
+            BookingStatus.PENDING,
+            BookingStatus.ACCEPTED,
+        ]),
+    )
+
+    return list(db.scalars(statement).all())

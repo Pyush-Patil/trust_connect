@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { ENDPOINTS, getConn, setBase, setForceDemo } from "../lib/api";
 import { useApp } from "../context/AppContext";
@@ -27,16 +28,12 @@ export function ApiDrawer({ open, onClose }) {
     }
     setTesting(true);
     setTestResult(null);
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 6000);
     try {
-      const res = await fetch(url + "/db-test", { signal: ctrl.signal });
-      const data = await res.json().catch(() => null);
-      setTestResult(res.ok ? `200 OK — ${JSON.stringify(data).slice(0, 120)}` : `${res.status} ${res.statusText}`);
+      const { data, status } = await axios.get(`${url}/db-test`, { timeout: 6000 });
+      setTestResult(`${status} OK — ${JSON.stringify(data).slice(0, 120)}`);
     } catch {
       setTestResult("Unreachable — the UI will keep serving demo data as fallback.");
     } finally {
-      clearTimeout(t);
       setTesting(false);
     }
   }

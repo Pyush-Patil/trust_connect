@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ApiError, mockRequest } from "./mock";
 
 export { ApiError };
@@ -237,6 +238,7 @@ export const ENDPOINTS = [
 const LS_BASE = "trust_connect_api_base";
 const LS_FORCE = "trust_connect_force_demo";
 const DEFAULT_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+const http = axios.create({ timeout: 15000 });
 
 let base = (() => {
   try { return localStorage.getItem(LS_BASE) ?? DEFAULT_BASE; } catch { return DEFAULT_BASE; }
@@ -293,47 +295,28 @@ async function request(method, path, opts = {}) {
     return mockRequest(method, path, opts);
   }
 
-  const qs = opts.query
-    ? "?" + Object.entries(opts.query)
-        .filter(([, v]) => v !== undefined && v !== "")
-        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
-        .join("&")
-    : "";
-
-  const headers = {};
-  if (opts.token) headers.Authorization = `Bearer ${opts.token}`;
-
-  // Do NOT set Content-Type for FormData. Browser sets multipart boundary.
-  if (opts.body !== undefined) headers["Content-Type"] = "application/json";
-
   try {
-    const res = await fetch(base + path + qs, {
+    const { data } = await http.request({
       method,
-      headers,
-      body: opts.formData
-        ? opts.formData
-        : opts.body !== undefined
-          ? JSON.stringify(opts.body)
-          : undefined,
+      url: `${base}${path}`,
+      params: opts.query,
+      data: opts.formData ?? opts.body,
+      headers: opts.token ? { Authorization: `Bearer ${opts.token}` } : undefined,
     });
-
-    const data = await res.json().catch(() => null);
-
-    if (!res.ok) {
-      const msg =
-        typeof data?.detail === "string"
-          ? data.detail
-          : Array.isArray(data?.detail)
-            ? data.detail.map((x) => x.msg).join(", ")
-            : data?.message ?? `Request failed (${res.status})`;
-
-      throw new ApiError(res.status, msg);
-    }
 
     setStatus("live");
     return data;
   } catch (e) {
-    // HTTP errors are real API errors. Only network/server failures use demo.
+    if (axios.isAxiosError(e) && e.response) {
+      const { data, status: responseStatus, statusText } = e.response;
+      const message = typeof data?.detail === "string"
+        ? data.detail
+        : Array.isArray(data?.detail)
+          ? data.detail.map((item) => item.msg).join(", ")
+          : data?.message ?? `Request failed (${responseStatus} ${statusText})`;
+      throw new ApiError(responseStatus, message);
+    }
+
     if (e instanceof ApiError) throw e;
 
     setStatus("fallback");

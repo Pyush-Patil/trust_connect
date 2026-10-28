@@ -17,10 +17,7 @@ from langchain_core.output_parsers import StrOutputParser
 from app.ai.pricing import get_service_prices
 
 
-# ============================================================
 # PATHS
-# ============================================================
-
 PROJECT_DIR = Path(__file__).resolve().parents[3]
 
 BACKEND_DIR = PROJECT_DIR / "backend"
@@ -32,22 +29,14 @@ VECTOR_STORE_DIR = (
 )
 
 
-# ============================================================
 # ENVIRONMENT
-# ============================================================
-
 ENV_FILE = PROJECT_DIR / ".env"
 
 load_dotenv(ENV_FILE)
 
 
-# ============================================================
 # EMBEDDING MODEL
-# ============================================================
-
 _embeddings = None
-
-
 def get_embeddings():
 
     global _embeddings
@@ -77,13 +66,8 @@ def get_embeddings():
     return _embeddings
 
 
-# ============================================================
 # VECTOR STORE
-# ============================================================
-
 _vector_store = None
-
-
 def load_vector_store():
 
     global _vector_store
@@ -92,10 +76,8 @@ def load_vector_store():
 
         print("Loading FAISS vector store...")
 
-        # ----------------------------------------------------
+        
         # Check vector store directory
-        # ----------------------------------------------------
-
         if not VECTOR_STORE_DIR.exists():
 
             raise RuntimeError(
@@ -103,10 +85,7 @@ def load_vector_store():
                 f"{VECTOR_STORE_DIR}"
             )
 
-        # ----------------------------------------------------
         # Check required FAISS files
-        # ----------------------------------------------------
-
         index_file = VECTOR_STORE_DIR / "index.faiss"
         metadata_file = VECTOR_STORE_DIR / "index.pkl"
 
@@ -124,16 +103,10 @@ def load_vector_store():
                 f"{metadata_file}"
             )
 
-        # ----------------------------------------------------
         # Load embeddings
-        # ----------------------------------------------------
-
         embeddings = get_embeddings()
 
-        # ----------------------------------------------------
         # Load FAISS
-        # ----------------------------------------------------
-
         _vector_store = FAISS.load_local(
 
             str(VECTOR_STORE_DIR),
@@ -148,13 +121,8 @@ def load_vector_store():
     return _vector_store
 
 
-# ============================================================
 # RETRIEVER
-# ============================================================
-
 _retriever = None
-
-
 def get_retriever():
 
     global _retriever
@@ -175,10 +143,7 @@ def get_retriever():
     return _retriever
 
 
-# ============================================================
 # DOCUMENT RETRIEVAL
-# ============================================================
-
 def retrieve_documents(query):
 
     retriever = get_retriever()
@@ -190,7 +155,6 @@ def retrieve_documents(query):
 
 # LANGCHAIN RAG CHAIN
 _rag_chain = None
-
 def create_rag_chain():
 
     global _rag_chain
@@ -200,16 +164,10 @@ def create_rag_chain():
 
     print("Creating LangChain RAG chain...")
 
-    # --------------------------------------------------------
     # Retriever
-    # --------------------------------------------------------
-
     retriever = get_retriever()
 
-    # --------------------------------------------------------
     # Groq API key
-    # --------------------------------------------------------
-
     api_key = os.getenv("GROQ_API_KEY")
 
     if not api_key:
@@ -217,10 +175,7 @@ def create_rag_chain():
             "GROQ_API_KEY not found in .env"
         )
 
-    # --------------------------------------------------------
     # LLM
-    # --------------------------------------------------------
-
     print("Loading Groq LLM...")
 
     llm = ChatGroq(
@@ -231,10 +186,7 @@ def create_rag_chain():
 
     print("Groq LLM loaded.")
 
-    # --------------------------------------------------------
     # Prompt
-    # --------------------------------------------------------
-
     prompt = ChatPromptTemplate.from_template(
     """
 You are a home maintenance troubleshooting assistant.
@@ -285,10 +237,7 @@ Question:
 """
 )
 
-    # --------------------------------------------------------
     # RAG chain
-    # --------------------------------------------------------
-
     _rag_chain = (
         {
             "context": retriever,
@@ -303,16 +252,9 @@ Question:
 
     return _rag_chain
 
-# ============================================================
 # ADD PRICING TO RAG RESPONSE
-# ============================================================
-
 def add_pricing(answer):
-
-    # --------------------------------------------------------
     # Find Recommended Service section
-    # --------------------------------------------------------
-
     match = re.search(
         r"Recommended Service:\s*(.*)",
         answer,
@@ -324,9 +266,8 @@ def add_pricing(answer):
 
     service_section = match.group(1)
 
-    # --------------------------------------------------------
+    
     # Extract bullet points
-    # --------------------------------------------------------
 
     services = re.findall(
         r"^\s*-\s*(.+)$",
@@ -350,16 +291,11 @@ def add_pricing(answer):
     if not services:
         return re.sub(r"\nEstimated Service Price:[\s\S]*$", "", answer).strip()
 
-    # --------------------------------------------------------
-    # Lookup prices
-    # --------------------------------------------------------
-
+    #Lookup prices
     priced_services = get_service_prices(services)
 
-    # --------------------------------------------------------
+    
     # Build pricing section
-    # --------------------------------------------------------
-
     pricing_lines = [
         "\nEstimated Service Price:"
     ]
@@ -372,16 +308,12 @@ def add_pricing(answer):
 
     pricing_section = "\n".join(pricing_lines)
 
-    # --------------------------------------------------------
+   
     # Append pricing
-    # --------------------------------------------------------
-
     return answer + "\n" + pricing_section
 
-# ============================================================
-# STRUCTURED AI ANSWER
-# ============================================================
 
+# STRUCTURED AI ANSWER
 def _clean_list(values):
     if not isinstance(values, list):
         return []
@@ -440,11 +372,7 @@ def _structured_context(query):
         "services": _clean_list(services.split(";")) if services else [],
     }
 
-
-# ============================================================
 # COMPLETE AI ANSWER
-# ============================================================
-
 def answer_query(query: str):
 
     global _rag_chain

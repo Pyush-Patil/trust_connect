@@ -7,7 +7,19 @@ from app.repositores.professional_repository import (
 )
 from app.schemas.professional_schema import ProfessionalResponse, ProfessionalUpdateRequest
 from app.repositores.professional_repository import get_professional_by_id
+from app.repositores.booking_repositores import get_active_bookings_for_professional
 from app.core.enums import VerificationStatus
+
+def sync_professional_availability(db: Session, professional: ProfessionalProfile) -> None:
+    if get_active_bookings_for_professional(db, professional.id):
+        return
+
+    if professional.is_available and professional.available_from is None:
+        return
+
+    professional.is_available = True
+    professional.available_from = None
+    db.commit()
 
 def get_professional_service(db:Session,)->list[ProfessionalResponse]:
 
@@ -16,6 +28,7 @@ def get_professional_service(db:Session,)->list[ProfessionalResponse]:
     response=[]
 
     for professional in professionals:
+        sync_professional_availability(db, professional)
 
         professional_response = ProfessionalResponse(
             id=professional.id,
@@ -54,6 +67,8 @@ def get_professional_by_id_service(db:Session,professional_id:int)->Professional
                     status_code=status.HTTP_400_BAD_REQUEST,
                     detail="Professional not verified"
                 )
+
+    sync_professional_availability(db, professional)
 
     return ProfessionalResponse(
         id=professional.id,

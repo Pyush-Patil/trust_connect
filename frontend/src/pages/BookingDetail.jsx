@@ -31,8 +31,9 @@ export default function BookingDetail() {
     setBusy(true);
     try {
       if (action === "accept") await api.acceptBooking(token, booking.id);
+      if (action === "complete") await api.completeBooking(token, booking.id);
       if (action === "cancel") await api.cancelBooking(token, booking.id);
-      toast(action === "accept" ? "Booking accepted." : "Booking cancelled.");
+      toast(action === "accept" ? "Booking accepted." : action === "complete" ? "Booking completed." : "Booking cancelled.");
       load();
     } catch (e) {
       toast(e instanceof ApiError ? e.message : "Could not update booking.", "error");
@@ -86,6 +87,7 @@ export default function BookingDetail() {
         )}
         <div className="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
           {isProfessional && booking.status === "pending" && <Button loading={busy} onClick={() => void update("accept")}><Icon name="check" className="h-4 w-4" /> Accept booking</Button>}
+          {isProfessional && booking.status === "confirmed" && <Button loading={busy} onClick={() => void update("complete")}><Icon name="check" className="h-4 w-4" /> Mark complete</Button>}
           {!isProfessional && booking.status === "pending" && <Button variant="danger" loading={busy} onClick={() => void update("cancel")}>Cancel booking</Button>}
           <Link to={`/professional/${booking.professional_id}`}><Button variant="outline">View professional</Button></Link>
         </div>

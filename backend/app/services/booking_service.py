@@ -280,6 +280,9 @@ def complete_booking_service(db:Session,current_user:User,booking_id:int,)->Book
     professional.is_available = True
     professional.available_from = None
 
+    db.commit()
+    db.refresh(booking)
+
     return BookingResponse.model_validate(booking)
 
 def cancel_booking_service(db:Session,current_user:User,booking_id:int)->BookingResponse:

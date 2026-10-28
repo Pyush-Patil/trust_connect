@@ -14,14 +14,14 @@ export const SERVICE_META = {
 const sx = (id) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=800&h=600`;
 
-/** Trade photography per service line */
+/** Equipment-focused photography per service line */
 export const SERVICE_IMAGES = {
-  "AC & Appliance": sx(33671149),
-  Electrician: sx(7285965),
-  Plumber: sx(6419128),
-  Carpenter: sx(5974413),
-  Painting: sx(7218683),
-  "Deep Cleaning": sx(6197121),
+  "AC & Appliance": sx(3964341),
+  Electrician: sx(38292956),
+  Plumber: sx(8488058),
+  Carpenter: sx(5484718),
+  Painting: sx(9222200),
+  "Deep Cleaning": sx(5218015),
 };
 
 export function ServiceIcon({ service, className }) {
@@ -39,18 +39,15 @@ export function ProfessionalCard({ pro, className }) {
       )}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-shell">
-        {pro.avatar_url ? (
+        {SERVICE_IMAGES[pro.service] ? (
           <img
-            src={pro.avatar_url}
-            alt={pro.name}
+            src={SERVICE_IMAGES[pro.service]}
+            alt={`${pro.service} tools and equipment`}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
           />
         ) : (
-          <Initials name={pro.name} className="h-full w-full rounded-none text-2xl" />
+          <Initials name={pro.service} className="h-full w-full rounded-none text-2xl" />
         )}
         {pro.verified && (
           <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-paper/95 px-2.5 py-1 text-[11px] font-bold text-ink shadow-card">
